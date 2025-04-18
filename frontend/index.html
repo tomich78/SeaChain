@@ -3,24 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Sistema Buques</title>
+  <title>Sistema de Gestión de Buques</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
-  <div class="login-container">
-    <h2>Inicio de sesión</h2>
-    <form id="login-form">
-      <label for="email">Correo electrónico:</label>
-      <input type="email" id="email" required>
+  <header>
+    <h2>Sistema de Gestión de Buques</h2>
+    <div class="dropdown">
+      <button><i class="fas fa-user"></i> Iniciar Sesión</button>
+      <div class="dropdown-content">
+        <a href="login.html?rol=buque"><i class="fas fa-ship"></i> Personal del Buque</a>
+        <a href="login.html?rol=operador"><i class="fas fa-cogs"></i> Operador</a>
+        <a href="login.html?rol=cliente"><i class="fas fa-box"></i> Cliente</a>
+      </div>
+    </div>
+  </header>
 
-      <label for="password">Contraseña:</label>
-      <input type="password" id="password" required>
-
-      <button type="submit">Iniciar sesión</button>
-    </form>
-    <p id="error-msg" class="error"></p>
-  </div>
-
-  <script src="login.js"></script>
+  <section class="main-section">
+    <h1>Bienvenido al sistema más eficiente de gestión marítima</h1>
+    <p>
+      Facilitamos la comunicación entre buques, operadores de puerto y clientes, automatizando actualizaciones, reduciendo tiempos de respuesta y mejorando la trazabilidad de las operaciones.
+    </p>
+  </section>
 </body>
 </html>

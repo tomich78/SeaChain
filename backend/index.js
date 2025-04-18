@@ -1,5 +1,6 @@
 const express = require('express');
 const { Pool } = require('pg');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -8,13 +9,23 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 });
 
+// Middleware para JSON
 app.use(express.json());
 
+// Servir archivos estáticos desde la carpeta frontend
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// Ruta principal para servir index.html (página de presentación, sin login)
 app.get('/', (req, res) => {
-  res.send('API de sistema de buques funcionando!');
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
-// ✳️ ACA PEGÁS EL CÓDIGO NUEVO DE LOGIN
+// Ruta de login.html para manejar login separado
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/login.html'));
+});
+
+// Endpoint de login solo si se accede desde login.html
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -29,7 +40,6 @@ app.post('/login', async (req, res) => {
     }
 
     const usuario = result.rows[0];
-
     res.json({ mensaje: 'Login exitoso', rol: await obtenerNombreRol(usuario.rol_id) });
   } catch (error) {
     console.error(error);
@@ -37,14 +47,16 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// Función auxiliar para obtener el nombre del rol
 async function obtenerNombreRol(rol_id) {
   const resRol = await pool.query('SELECT nombre FROM roles WHERE id = $1', [rol_id]);
   return resRol.rows[0]?.nombre;
 }
 
-// Puerto
+// Puerto del servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
 });
+
 
