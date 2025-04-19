@@ -4,28 +4,30 @@ const path = require('path');
 require('dotenv').config();
 
 const app = express();
+
+// Conexión a PostgreSQL
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
 
-// Middleware para JSON
+// Middleware
 app.use(express.json());
 
-// Servir archivos estáticos desde la carpeta frontend
+// Archivos estáticos desde /frontend
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// Ruta principal para servir index.html (página de presentación, sin login)
+// Página principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
-// Ruta de login.html para manejar login separado
+// Página de login
 app.get('/login.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/login.html'));
 });
 
-// Endpoint de login solo si se accede desde login.html
+// Login con validación de usuario
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -41,22 +43,23 @@ app.post('/login', async (req, res) => {
 
     const usuario = result.rows[0];
     res.json({ mensaje: 'Login exitoso', rol: await obtenerNombreRol(usuario.rol_id) });
+
   } catch (error) {
-    console.error(error);
+    console.error('Error en login:', error);
     res.status(500).json({ mensaje: 'Error en el servidor' });
   }
 });
 
-// Función auxiliar para obtener el nombre del rol
+// Función auxiliar para buscar el nombre del rol
 async function obtenerNombreRol(rol_id) {
   const resRol = await pool.query('SELECT nombre FROM roles WHERE id = $1', [rol_id]);
-  return resRol.rows[0]?.nombre;
+  return resRol.rows[0]?.nombre || 'Desconocido';
 }
 
-// Puerto del servidor
+// Servidor corriendo
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
 

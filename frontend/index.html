@@ -29,3 +29,19 @@
   </section>
 </body>
 </html>
+
+<script>
+  const dropdown = document.querySelector('.dropdown');
+  let timeout;
+
+  dropdown.addEventListener('mouseenter', () => {
+    clearTimeout(timeout);
+    dropdown.querySelector('.dropdown-content').style.display = 'block';
+  });
+
+  dropdown.addEventListener('mouseleave', () => {
+    timeout = setTimeout(() => {
+      dropdown.querySelector('.dropdown-content').style.display = 'none';
+    }, 200); // espera 200 milisegundos antes de cerrar
+  });
+</script>
