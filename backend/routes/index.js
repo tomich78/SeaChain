@@ -15,16 +15,16 @@ const pool = new Pool({
 app.use(express.json());
 
 // Archivos estáticos desde /frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '../../frontend')));
 
 // Página principal
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Página de login
 app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/login.html'));
+  res.sendFile(path.join(__dirname, 'login.html'));
 });
 
 // Login con validación de usuario
