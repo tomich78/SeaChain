@@ -1,0 +1,32 @@
+<script>
+    // const rol = localStorage.getItem('rol');
+    //if (!rol || rol !== 'operador') {
+    //  window.location.href = 'index.html';
+    //}
+</script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Operador</title>
+  <link rel="stylesheet" href="styles-operador.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Panel de Buques Activos</h1>
+    <div id="buques-container" class="buques-grid">
+      <!-- Los buques se insertarán aquí dinámicamente -->
+    </div>
+  </div>
+  <button onclick="cerrarSesion()">Cerrar sesión</button>
+
+  <script src="../backend/routes/index-operador.js"></script>
+</body>
+<script>
+  function cerrarSesion() {
+    localStorage.removeItem('rol');
+    window.location.href = 'index.html';
+  }
+</script>
+</html>

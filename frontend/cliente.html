@@ -1,0 +1,26 @@
+<script>
+  const rol = localStorage.getItem('rol');
+  if (!rol || rol !== 'operador') {
+    window.location.href = 'index.html';
+  }
+</script>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel del Cliente</title>
+</head>
+<body>
+  <h1>Bienvenido, Cliente</h1>
+  <p>Aquí podés visualizar el estado de tus pedidos y recibir notificaciones.</p>
+  <button onclick="cerrarSesion()">Cerrar sesión</button>
+
+  <script>
+    function cerrarSesion() {
+      localStorage.removeItem('rol');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seguimiento</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="login-container">
+    <h1>Seguimiento de Carga</h1>
+    <form id="form-seguimiento">
+      <input type="text" id="codigo" placeholder="Código de acceso" required />
+      <button type="submit">Consultar</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('form-seguimiento').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const codigo = document.getElementById('codigo').value;
+
+      const res = await fetch(`/seguimiento/${codigo}`);
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Datos recibidos: " + JSON.stringify(data));
+        // Podés mostrarlos en pantalla más adelante
+      } else {
+        alert("Código no válido o no encontrado.");
+      }
+    });
+  </script>
+</body>
+</html>

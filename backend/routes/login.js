@@ -15,17 +15,21 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     const result = await response.json();
   
     if (response.ok) {
+
+      // Guardar rol en localStorage
+      localStorage.setItem('rol', result.rol);
+
       // Redirigir según el rol del usuario
       switch(result.rol) {
         case 'operador':
-          window.location.href = 'operador.html';
+          window.location.href = '../frontend/operador.html';
           break;
         case 'buque':
-          window.location.href = 'buque.html';
+          window.location.href = '../frontend/buque.html';
           break;
-        case 'cliente':
-          window.location.href = 'cliente.html';
-          break;
+        case 'admin':
+            window.location.href = '../frontend/admin.html';
+            break;
         default:
           document.getElementById('error-msg').textContent = 'Rol desconocido.';
       }

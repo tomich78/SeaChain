@@ -1,0 +1,26 @@
+<script>
+  const rol = localStorage.getItem('rol');
+  if (!rol || rol !== 'operador') {
+    window.location.href = 'index.html';
+  }
+</script>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel del Buque</title>
+</head>
+<body>
+  <h1>Bienvenido, Tripulación del Buque</h1>
+  <p>Aquí podés actualizar tu estado, ubicación y cargas.</p>
+  <button onclick="cerrarSesion()">Cerrar sesión</button>
+
+  <script>
+    function cerrarSesion() {
+      localStorage.removeItem('rol');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

@@ -18,7 +18,7 @@ header {
 /* === Dropdown === */
 .dropdown {
   position: absolute;
-  top: 20px;
+  top: 65px;
   right: 20px;
 }
 
@@ -131,4 +131,23 @@ header {
     padding: 8px 16px;
     font-size: 14px;
   }
+}
+
+.boton-seguimiento {
+  position: absolute;
+  top: 20px;
+  right: 20px; /* ajustá según necesidad */
+  background-color: #0077b6;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.boton-seguimiento:hover {
+  background-color: #0096c7;
 }
