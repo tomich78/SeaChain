@@ -57,7 +57,7 @@
         if (res.ok) {
           alert(`Bienvenido ${data.rol}`);
           // Redirigir según el rol si querés:
-          // window.location.href = `/dashboard-${data.rol}.html`;
+          window.location.href = `/index-${data.rol}.html`;
         } else {
           alert(data.mensaje);
         }

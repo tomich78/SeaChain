@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Empresa</title>
+  <link rel="stylesheet" href="styles-admin.css">
+
+  <script>
+    // Verificar token antes de que cargue el body
+    // Reuse the existing token variable
+
+    if (!token) {
+      alert('Acceso denegado');
+      window.location.href = 'admindeveloper.html';
+    }
+  </script>
+</head>
+<body>
+  <h1>Crear Nueva Empresa</h1>
+  <form id="form-crear-empresa">
+    <label>Nombre de la empresa:</label>
+    <input type="text" id="nombreEmpresa" required>
+
+    <label>Email para admin:</label>
+    <input type="email" id="emailAdmin" required>
+
+    <button type="submit">Crear Empresa</button>
+
+    <button onclick="logout()">Cerrar sesión</button>
+  </form>
+
+  <div id="resultado-creacion"></div>
+
+
+  <h2>Empresas registradas</h2>
+  <div id="lista-empresas"></div>
+
+  <script>
+    const token = localStorage.getItem('devToken');
+  
+    async function cargarEmpresas() {
+      const res = await fetch('/api/empresas');
+      const empresas = await res.json();
+  
+      const lista = empresas.map(e =>
+        `<tr>
+           <td>${e.id}</td>
+           <td>${e.nombre}</td>
+           <td>${e.email_contacto}</td>
+           <td><button onclick="eliminarEmpresa(${e.id})">🗑️ Eliminar</button></td>
+         </tr>`
+      ).join('');
+  
+      document.getElementById('lista-empresas').innerHTML = `
+        <table border="1" style="margin-top:20px;">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email contacto</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>${lista}</tbody>
+        </table>
+      `;
+    }
+  
+    async function eliminarEmpresa(id) {
+      if (!confirm('¿Seguro que querés eliminar esta empresa?')) return;
+  
+      const res = await fetch(`/api/empresas/${id}`, {
+        method: 'DELETE'
+      });
+  
+      if (res.ok) {
+        alert('Empresa eliminada');
+        cargarEmpresas();
+      } else {
+        alert('Error al eliminar empresa');
+      }
+    }
+  
+    // Cargar empresas al inicio
+    cargarEmpresas();
+  </script>
+  
+  
+  <script>
+    function logout() {
+      localStorage.removeItem('devToken');
+      window.location.href = 'admindeveloper.html';
+    }
+  </script>
+
+  <script>
+    document.getElementById('form-crear-empresa').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombreEmpresa').value;
+      const email = document.getElementById('emailAdmin').value;
+      const password = Math.floor(1000 + Math.random() * 9000).toString();
+      const token = localStorage.getItem('devToken'); // recuperamos el token guardado
+
+      const res = await fetch('/api/crear-empresa', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        },
+        body: JSON.stringify({ nombre, email, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        document.getElementById('resultado-creacion').innerHTML =
+          `<p style="color:green;">Empresa creada con éxito.</p>
+           <p>Usuario admin: <strong>${email}</strong></p>
+           <p>Contraseña: <strong>${password}</strong></p>`;
+      } else {
+        document.getElementById('resultado-creacion').innerHTML =
+          `<p style="color:red;">Error: ${data.message}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>

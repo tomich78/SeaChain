@@ -18,6 +18,11 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
       // Guardar rol en localStorage
       localStorage.setItem('rol', result.rol);
+      if (result.empresa_id) {
+        localStorage.setItem('empresaId', result.empresa_id); // ✅ Guardar empresaId
+      } else {
+        console.warn('⚠️ No se recibió empresa_id del backend');
+      }
 
       // Redirigir según el rol del usuario
       switch(result.rol) {

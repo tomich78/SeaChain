@@ -2,7 +2,10 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: 'TU_CONEXION_POSTGRESQL' // la que usás en Railway o local
+  connectionString: 'postgresql://postgres:gPRnEfEITJGmBHmPsBibFxdKuaOfSGPB@caboose.proxy.rlwy.net:17055/railway',
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 module.exports = pool;

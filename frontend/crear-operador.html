@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Operador</title>
+  <link rel="stylesheet" href="styles-admin.css">
+</head>
+<body>
+  <h1>Crear Operadores</h1>
+  <form id="form-crear-operador">
+    <label>Zona:</label>
+    <input type="text" id="zona" required placeholder="Ej: Quilmes">
+
+    <label>Cantidad de operadores:</label>
+    <input type="number" id="cantidad" min="1" required>
+
+    <label>Nombre base del usuario:</label>
+    <input type="text" id="nombreBase" required placeholder="Ej: operadorquilmes">
+
+    <button type="submit">Crear operadores</button>
+  </form>
+
+  <div id="resultado-operadores"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

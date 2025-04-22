@@ -1,10 +1,7 @@
-// backend/routes/operador.js
-const express = require('express');
-const router = express.Router();
-const pool = require('../db');
-
 router.get('/buques-activos', async (req, res) => {
   try {
+    const empresaId = 1; // por ahora fijo, luego lo recibís dinámicamente
+
     const result = await pool.query(`
       SELECT b.id, b.nombre, b.estado,
         EXISTS (
@@ -14,9 +11,10 @@ router.get('/buques-activos', async (req, res) => {
           WHERE r.buque_id = b.id AND n.estado = 'nueva'
         ) AS nuevas_notificaciones
       FROM buques b
-      WHERE b.estado = 'activo';
+      WHERE b.estado = 'activo'
+        AND b.empresa_id = $1;
+    `, [empresaId]);
 
-    `);
     res.json(result.rows);
   } catch (err) {
     console.error(err);
@@ -24,6 +22,5 @@ router.get('/buques-activos', async (req, res) => {
   }
 });
 
-module.exports = router;
 
   
