@@ -36,7 +36,7 @@
   <div id="lista-empresas"></div>
 
   <script>
-    const token = localStorage.getItem('devToken');
+    const token = sessionStorage.getItem('devToken');
   
     async function cargarEmpresas() {
       const res = await fetch('/api/empresas');
@@ -88,7 +88,7 @@
   
   <script>
     function logout() {
-      localStorage.removeItem('devToken');
+      sessionStorage.removeItem('devToken');
       window.location.href = 'admindeveloper.html';
     }
   </script>
@@ -97,10 +97,15 @@
     document.getElementById('form-crear-empresa').addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      function generarUsuarioAdmin(nombreEmpresa) {
+        return nombreEmpresa.toLowerCase().replace(/\s+/g, '') + 'Admin';
+      }
+
       const nombre = document.getElementById('nombreEmpresa').value;
+      const usuario = generarUsuarioAdmin(nombre);
       const email = document.getElementById('emailAdmin').value;
       const password = Math.floor(1000 + Math.random() * 9000).toString();
-      const token = localStorage.getItem('devToken'); // recuperamos el token guardado
+      const token = sessionStorage.getItem('devToken'); // recuperamos el token guardado
 
       const res = await fetch('/api/crear-empresa', {
         method: 'POST',
@@ -108,16 +113,17 @@
           'Content-Type': 'application/json',
           'Authorization': token
         },
-        body: JSON.stringify({ nombre, email, password })
+        body: JSON.stringify({ nombre, usuario, email, password })
       });
 
       const data = await res.json();
+      console.log("📦 Datos del backend:", usuario);
 
       if (res.ok) {
         document.getElementById('resultado-creacion').innerHTML =
           `<p style="color:green;">Empresa creada con éxito.</p>
-           <p>Usuario admin: <strong>${email}</strong></p>
-           <p>Contraseña: <strong>${password}</strong></p>`;
+          <p>Usuario admin: <strong>${usuario}</strong></p>
+          <p>Contraseña: <strong>${password}</strong></p>`;
       } else {
         document.getElementById('resultado-creacion').innerHTML =
           `<p style="color:red;">Error: ${data.message}</p>`;

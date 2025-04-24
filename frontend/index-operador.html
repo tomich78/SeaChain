@@ -1,9 +1,3 @@
-<script>
-    // const rol = localStorage.getItem('rol');
-    //if (!rol || rol !== 'operador') {
-    //  window.location.href = 'index.html';
-    //}
-</script>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,20 +7,54 @@
   <link rel="stylesheet" href="styles-operador.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Panel de Buques Activos</h1>
-    <div id="buques-container" class="buques-grid">
-      <!-- Los buques se insertarán aquí dinámicamente -->
-    </div>
-  </div>
-  <button onclick="cerrarSesion()">Cerrar sesión</button>
+  <script>
+    const rol = sessionStorage.getItem('rol');
+    const zona_id = sessionStorage.getItem('zona_id');
+    const usuario = sessionStorage.getItem('nombre');
 
-  <script src="../backend/routes/index-operador.js"></script>
+    if (!rol || rol !== 'operador' || !zona_id) {
+      window.location.href = 'index.html';
+    }
+  </script>
+
+  <div class="container">
+    <h1>Buques</h1>
+    <h2>Operador: <span id="nombre-operador"></span></h2>
+    <h2>Zona: <span id="nombre-zona">Cargando...</span></h2>
+
+    <h2>🟢 En servicio</h2>
+    <div id="en-servicio" class="buques-grid"></div>
+
+    <h2>🟡 Fuera de servicio</h2>
+    <div id="no-servicio" class="buques-grid"></div>
+
+    <h2>🔴 Inactivos</h2>
+    <div id="inactivos" class="buques-grid"></div>
+
+    <button class="volver-btn" onclick="window.location.href='index.html'">Volver</button>
+  </div>
+
+  <script src="operador.js"></script>
+  <script>
+    // Mostrar nombre del operador
+    document.getElementById('nombre-operador').textContent = sessionStorage.getItem('nombre');
+
+    // Obtener nombre de la zona
+    async function cargarNombreZona() {
+      const zonaId = sessionStorage.getItem('zona_id');
+      try {
+        const res = await fetch(`/api/zonas/${zonaId}`);
+        const data = await res.json();
+        document.getElementById('nombre-zona').textContent = data.nombre || 'Desconocida';
+      } catch (error) {
+        console.error('❌ Error al cargar zona:', error);
+        document.getElementById('nombre-zona').textContent = 'Error al cargar';
+      }
+    }
+
+    cargarNombreZona();
+  </script>
 </body>
-<script>
-  function cerrarSesion() {
-    localStorage.removeItem('rol');
-    window.location.href = 'index.html';
-  }
-</script>
 </html>
+
+

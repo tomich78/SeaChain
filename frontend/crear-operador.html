@@ -7,6 +7,7 @@
 </head>
 <body>
   <h1>Crear Operadores</h1>
+
   <form id="form-crear-operador">
     <label>Zona:</label>
     <input type="text" id="zona" required placeholder="Ej: Quilmes">
@@ -18,10 +19,54 @@
     <input type="text" id="nombreBase" required placeholder="Ej: operadorquilmes">
 
     <button type="submit">Crear operadores</button>
+    <button type="button" onclick="window.location.href='index-admin.html'">Volver</button>
   </form>
 
   <div id="resultado-operadores"></div>
 
-  <script src="admin.js"></script>
+  <script>
+    // 🔐 Generador de contraseña
+    function generarContraseña() {
+      return Math.floor(1000 + Math.random() * 9000).toString();
+    }
+
+    // 👤 Crear múltiples operadores
+    document.getElementById('form-crear-operador').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const zona = document.getElementById('zona').value.trim();
+      const cantidad = parseInt(document.getElementById('cantidad').value);
+      const nombreBase = document.getElementById('nombreBase').value.trim();
+      const empresa_id = sessionStorage.getItem('empresaId');
+      const emailAdmin = sessionStorage.getItem('adminEmail');
+
+      let resultadoHTML = `<h3>Operadores creados:</h3><ul>`;
+
+      for (let i = 1; i <= cantidad; i++) {
+        const username = `${nombreBase}${i}`;
+        const password = generarContraseña();
+
+        try {
+          const response = await fetch('/api/crear-operador', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password, zona, empresa_id, emailAdmin })
+          });
+
+          if (response.ok) {
+            resultadoHTML += `<li>${username} - Contraseña: ${password}</li>`;
+          } else {
+            resultadoHTML += `<li style="color:red">${username} - Error al crear</li>`;
+          }
+        } catch (error) {
+          resultadoHTML += `<li style="color:red">${username} - Error de conexión</li>`;
+        }
+      }
+
+      resultadoHTML += `</ul>`;
+      document.getElementById('resultado-operadores').innerHTML = resultadoHTML;
+    });
+  </script>
 </body>
 </html>
+

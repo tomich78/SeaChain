@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel del Buque</title>
+  <link rel="stylesheet" href="styles-buques.css">
+</head>
+<body>
+    <div class="container">
+      <h1>Panel del Buque</h1>
+  
+      <div class="grid-panel">
+        <!-- IZQUIERDA -->
+        <div class="formulario-actualizacion">
+            <label for="nueva-actualizacion"><strong>Nueva actualización</strong></label>
+
+            <label for="fecha-actualizacion"><strong>Fecha</strong></label>
+            <input type="date" id="fecha-actualizacion" required>
+
+            <textarea id="nueva-actualizacion" rows="6" placeholder="Ej: 23-04-25 - El buque ha llegado al puerto..."></textarea>
+  
+            <button onclick="enviarActualizacion()">Cargar actualización</button>
+        </div>
+  
+        <!-- DERECHA -->
+        <div class="historial">
+          <h2>Historial acumulado</h2>
+          <div id="historial">Cargando...</div>
+        </div>
+      </div>
+    </div>
+  
+    <script>
+
+      // Obtener el buqueId desde la URL
+      const buqueId = sessionStorage.getItem('buque_id');
+      const operadorId = sessionStorage.getItem('usuario_id'); // si lo necesitas
+
+      //Verificación
+      if (!buqueId || !operadorId) {
+        alert('Falta información de buque u operador. Redirigiendo al login...');
+        window.location.href = 'login.html';
+      }
+
+      async function cargarHistorial() {
+        try {
+          const res = await fetch(`/actualizaciones/${buqueId}`);
+          if (res.ok) {
+            const data = await res.json();
+            document.getElementById('historial').textContent = data.contenido;
+          } else {
+            document.getElementById('historial').textContent = 'Sin historial aún.';
+          }
+        } catch (err) {
+          document.getElementById('historial').textContent = 'Error al cargar historial.';
+          console.error(err);
+        }
+      }
+  
+        async function enviarActualizacion() {
+          const fecha = document.getElementById('fecha-actualizacion').value;
+          const nuevaActualizacion = document.getElementById('nueva-actualizacion').value;
+          const contenidoFinal = `${fecha} - ${nuevaActualizacion}`;
+
+          if (!nuevaActualizacion.trim()) {
+              alert('Escribe una actualización antes de enviar.');
+              return;
+          }
+
+          try {
+              const res = await fetch('/actualizaciones', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  buque_id: buqueId,
+                  operador_id: operadorId,
+                  nueva_actualizacion: contenidoFinal
+              })
+              });
+
+              if (res.ok) {
+              document.getElementById('nueva-actualizacion').value = '';
+              cargarHistorial();
+              } else {
+              alert('Error al enviar actualización');
+              }
+          } catch (err) {
+              alert('Error de conexión con el servidor');
+              console.error(err);
+          }
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+    const hoy = new Date().toISOString().split('T')[0];
+    document.getElementById('fecha-actualizacion').value = hoy;
+    });
+
+
+  
+      cargarHistorial();
+    </script>
+  </body>
+</html>
+

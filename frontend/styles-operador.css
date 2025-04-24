@@ -60,4 +60,22 @@ body {
     border-radius: 6px;
     cursor: pointer;
   }
-  
+
+  .volver-btn {
+    padding: 5px 10px;
+    font-size: 13px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3970e6;
+    color: white;
+    cursor: pointer;
+  }
+  .volver-btn:hover {
+    background-color: #104799;
+  }
+
+  .info-contrato {
+    font-size: 0.9em;
+    color: #444;
+    margin-bottom: 5px;
+  }

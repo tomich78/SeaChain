@@ -15,6 +15,8 @@
     <input type="password" id="dev-pass" required>
 
     <button type="submit">Ingresar</button>
+    <button type="button" onclick="window.location.href='index.html'">Volver</button>
+
   </form>
 
   <div id="login-error" style="color:red;"></div>
@@ -34,7 +36,7 @@
       const data = await res.json();
   
       if (res.ok) {
-        localStorage.setItem('devToken', data.token); // Guarda el token
+        sessionStorage.setItem('devToken', data.token); // Guarda el token
         window.location.href = 'crear-empresa.html';
       } else {
         document.getElementById('login-error').textContent = data.message;

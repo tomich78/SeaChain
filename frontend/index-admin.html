@@ -12,8 +12,7 @@
     <button onclick="verReportes()">📄 Ver Reportes</button>
     <button onclick="window.location.href='crear-operador.html'">👤 Crear Operador</button>
     <button onclick="window.location.href='crear-buque.html'">🚢 Crear Buque</button>
-    <button onclick="mostrarEliminarOperador()">🗑️ Eliminar Operador</button>
-    <button onclick="mostrarEliminarBuque()">🗑️ Eliminar Buque</button>
+    <button type="button" onclick="window.location.href='index.html'">Salir</button>
   </div>
 
   <h2>Operadores registrados</h2>
@@ -45,10 +44,10 @@
 
   <div id="contenido"></div>
 
-  <script src="index-admin.js"></script>
+  <script src="admin.js"></script>
 
   <script>
-    const empresaId = localStorage.getItem('empresaId');
+    const empresaId = sessionStorage.getItem('empresaId');
   
     if (!empresaId) {
       alert('No se encontró empresa del administrador. Cerrá sesión y volvé a iniciar.');
@@ -67,6 +66,9 @@
           <td><button onclick="eliminarOperador(${o.id})">🗑️ Eliminar</button></td>
         </tr>
       `).join('');
+
+      console.log('🟢 Lista de operadores:', operadores);
+      console.log('📦 empresaId usado:', empresaId);
   
       document.getElementById('tabla-operadores').innerHTML = html;
     }
