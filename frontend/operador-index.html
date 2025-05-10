@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Operador</title>
+  <link rel="stylesheet" href="styles-operador.css" />
+</head>
+<body>
+
+  <h1>Panel Operador</h1>
+
+  <div class="contenedor">
+    <!-- IZQUIERDA: Menú admin -->
+    <div class="card-menu">
+      <h2>Menú Admin</h2>
+      <div class="menu-admin">
+        <button onclick="window.location.href='crear-operador.html'">➕ Crear/Modificar operadores</button>
+        <button onclick="window.location.href='crear-buques.html'">🚢 Crear/Modificar buques</button>
+        <button onclick="window.location.href='crear-contratos.html'">🚢 Crear/Modificar contratos</button>
+        <button onclick="window.location.href='constructor-plantilla.html'">Editar Plantilla</button>
+
+      </div>
+    </div>
+
+    <!-- DERECHA: Buques -->
+    <div class="panel-buques">
+      <h1>Buques</h1>
+      <h2>Operador: <span id="nombre-operador"></span></h2>
+      <h2>Zona: <span id="nombre-zona">Cargando...</span></h2>
+
+      <h3>🟢 En servicio</h3>
+      <div id="en-servicio" class="buques-grid"></div>
+
+      <h3>🟡 Fuera de servicio</h3>
+      <div id="no-servicio" class="buques-grid"></div>
+
+      <h3>🔴 Inactivos</h3>
+      <div id="inactivos" class="buques-grid"></div>
+    </div>
+  </div>
+  
+  <button class="volver-btn" onclick="window.location.href='index.html'">Volver</button>
+
+  <script src="operador-index.js"></script>
+</body>
+</html>
+
+

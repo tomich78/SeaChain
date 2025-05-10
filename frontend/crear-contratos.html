@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Contratos</title>
+  <link rel="stylesheet" href="crear-contratos.css">
+</head>
+<body>
+  <h1>Panel de Contratos</h1>
+  <div class="container">
+
+    <!-- Panel izquierdo: Formulario -->
+    <div class="panel">
+      <h2>Agregar Contrato</h2>
+      <form id="form-contrato">
+
+        <label>Seleccionar cliente existente:</label>
+        <select id="clienteExistente">
+          <option value="">-- Nuevo cliente --</option>
+        </select>
+        
+        <!-- Solo mostrar si no se elige cliente existente -->
+        <div id="nuevoClienteFields">
+          <label>Nombre del cliente:</label>
+          <input type="text" id="nombre" />
+        
+          <label>Email del cliente:</label>
+          <input type="email" id="email" />
+        </div>
+        
+        <label for="buque">Buque</label>
+        <select id="buque" name="buque" required></select>
+        
+        <label for="operador">Operador</label>
+        <select id="operador" name="operador" required></select>
+
+        <label for="frecuenciaH">Frecuencia de horas</label>
+        <input type="number" id="frecuenciaH" name="frecuenciaH" required>
+
+        <label for="fecha_inicio">Fecha de Inicio</label>
+        <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+
+        <button type="submit">Crear Contrato</button>
+        <button type="button" onclick="window.location.href='admin-index.html'">Volver</button>
+      </form>
+    </div>
+
+    <!-- Panel derecho: Lista de contratos -->
+    <div class="panel">
+      <h2>Contratos Activos</h2>
+      <div id="contratos-activos"></div>
+    </div>
+    <div class="panel">
+      <h2>Contratos Finalizados</h2>
+      <div id="contratos-finalizados"></div>
+    </div>
+
+  </div>
+
+  <script src="crear-contratos.js"></script>
+  
+  <div id="modal-contrato" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="cerrarModal()">&times;</span>
+      <h3>Detalles del Contrato</h3>
+      <div id="detalle-contrato"></div>
+    </div>
+  </div>
+</body>
+</html>

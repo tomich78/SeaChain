@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Constructor de Plantilla SOF</title>
+  <link rel="stylesheet" href="constructor-plantilla.css">
+</head>
+<body>
+  <div class="contenedor">
+    <!-- Panel Izquierdo: Datos de empresa -->
+    <div class="panel panel-empresa">
+      <h2>Datos de la Empresa</h2>
+      <label>Nombre:</label>
+      <input type="text" id="nombreEmpresa" placeholder="Empresa S.A.">
+
+      <label>Logo:</label>
+      <input type="file" id="logoEmpresa">
+
+      <label>Encabezado personalizado:</label>
+      <textarea id="encabezadoEmpresa" rows="4" placeholder="Encabezado..."></textarea>
+    </div>
+
+    <!-- Panel Central: Lista de frases -->
+    <div class="panel panel-frases">
+      <h2>Frases disponibles</h2>
+
+      <select id="categoria">
+        <option value="">-- Categoría --</option>
+        <option value="Navegacion">Navegación</option>
+        <option value="Carga">Carga</option>
+        <option value="Clima">Clima</option>
+        <option value="Demora">Demoras</option>
+      </select>
+
+      <div id="listaFrases"></div>
+
+      <textarea id="nuevaFrase" placeholder="Nueva frase..."></textarea>
+      <button onclick="agregarFrase()">Agregar frase</button>
+    </div>
+
+    <!-- Panel Derecho: Vista previa del SOF -->
+    <div class="panel panel-preview">
+      <h2>Vista Previa SOF</h2>
+      <div id="vistaSOF"></div>
+      <button onclick="guardarPlantilla()">Guardar Plantilla</button>
+    </div>
+  </div>
+
+  <script src="constructor-plantilla.js"></script>
+</body>
+</html>

@@ -8,15 +8,22 @@
 </head>
 <body>
   <div class="login-container">
-    <h1 id="titulo-login">Iniciar sesión</h1>
-
+    <h1>Iniciar Sesión</h1>
     <form id="login-form">
-      <input type="texy" id="nombre" placeholder="Usuario" required />
-      <input type="password" id="password" placeholder="Contraseña" required />
-      <button type="submit">Ingresar</button>
+      <label>Usuario:</label>
+      <input type="text" id="dev-user" required />
+
+      <label>Contraseña:</label>
+      <input type="password" id="dev-pass" required />
+
+      <button type="submit" id="btn-login">Ingresar</button>
+      <button type="button" onclick="window.location.href='index.html'">Volver</button>
     </form>
+
+    <div id="login-error" style="color:red;"></div>
   </div>
 
   <script src="login.js"></script>
 </body>
 </html>
+

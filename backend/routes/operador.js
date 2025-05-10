@@ -8,17 +8,23 @@ router.get('/buques/:empresaId/:zonaId', async (req, res) => {
 
   try {
     const result = await pool.query(`
-      SELECT 
-        b.id,
-        b.nombre,
-        b.estado,
-        b.en_servicio,
-        c.id IS NOT NULL AS contrato_vigente,
-        u.nombre AS operador_nombre
-      FROM buques b
-      LEFT JOIN contratos c ON c.buque_id = b.id AND c.fecha_fin IS NULL
-      LEFT JOIN usuarios u ON c.operador_id = u.id
-      WHERE b.empresa_id = $1 AND b.zona_id = $2
+    SELECT 
+      b.id,
+      b.nombre,
+      b.activo,
+      b.en_servicio,
+      c.id IS NOT NULL AS contrato_vigente,
+      o.nombre AS operador_nombre,
+      e.nombre AS empresa_contrato,
+      cl.nombre_empresa AS cliente_nombre
+    FROM buques b
+    LEFT JOIN contratos c ON c.buque_id = b.id AND c.fecha_fin IS NULL
+    LEFT JOIN operadores o ON c.operador_id = o.id
+    LEFT JOIN empresas e ON c.empresa_id = e.id
+    LEFT JOIN clientes cl ON c.cliente_id = cl.id
+    WHERE b.empresa_id = $1 AND b.zona_id = $2
+
+
     `, [empresaId, zonaId]);
 
     res.json(result.rows);

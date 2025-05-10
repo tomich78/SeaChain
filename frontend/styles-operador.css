@@ -1,81 +1,149 @@
+/* ======= GLOBAL ======= */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #003366;
-  }
-  
-  .buques-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  .buque-card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-  }
-  
-  .buque-card h3 {
-    margin: 0 0 10px 0;
-  }
-  
-  .buque-card .estado {
-    font-size: 0.9em;
-    color: green;
-  }
-  
-  .buque-card .notificacion {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: red;
-    color: white;
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 20px;
-  }
-  
-  .buque-card button {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #0077b6;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  color: #003366;
+  margin-top: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* ======= LAYOUT ======= */
+.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ======= PANEL DE BOTONES ======= */
+.card-menu {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+.card-menu h2 {
+  color: #005f86;
+  margin-bottom: 25px;
+}
+
+.menu-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.menu-admin button {
+  padding: 14px 20px;
+  font-size: 16px;
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-admin button:hover {
+  background-color: #005f86;
+}
+
+/* ======= PANEL DE BUQUES ======= */
+.panel-buques {
+  background-color: #e3f2fd;
+  border-radius: 10px;
+  padding: 25px;
+  width: 700px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 15px;
+}
+
+.buques-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.buque-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.buque-card h3 {
+  margin: 0 0 10px 0;
+}
+
+.buque-card .estado {
+  font-size: 0.9em;
+  color: green;
+}
+
+.buque-card button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.buque-card button:hover {
+  background-color: #005f8e;
+}
+
+.info-contrato {
+  font-size: 0.9em;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+/* ======= VOLVER ======= */
+.volver-btn {
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3970e6;
+  color: white;
+  cursor: pointer;
+  margin: 30px auto;
+  display: block;
+}
+
+.volver-btn:hover {
+  background-color: #104799;
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 900px) {
+  .contenedor {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .volver-btn {
-    padding: 5px 10px;
-    font-size: 13px;
-    border: none;
-    border-radius: 5px;
-    background-color: #3970e6;
-    color: white;
-    cursor: pointer;
+  .card-menu,
+  .panel-buques {
+    width: 90%;
   }
-  .volver-btn:hover {
-    background-color: #104799;
-  }
+}
 
-  .info-contrato {
-    font-size: 0.9em;
-    color: #444;
-    margin-bottom: 5px;
-  }

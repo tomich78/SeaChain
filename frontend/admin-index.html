@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Administrador</title>
+  <link rel="stylesheet" href="styles-admin.css" />
+</head>
+<body>
+  <header style="text-align: center; padding: 20px;">
+    <img src="logo.png" alt="Logo" style="height: 60px; margin-bottom: 10px;">
+    <h1>Panel de Administración</h1>
+
+    <div class="panel-layout">
+      <!-- Izquierda: datos del admin -->
+      <div class="admin-info-box">
+        <p>👋 Bienvenido, <strong id="nombre-admin">...</strong></p>
+        <p>Empresa: <strong id="empresa-admin">...</strong></p>
+        <p>Email: <strong id="email-admin">...</strong></p>
+      </div>
+
+      <!-- Derecha: menú de botones -->
+      <div class="card-menu">
+        <h2>Acciones principales</h2>
+        <div class="menu-admin">
+          <button onclick="window.location.href='crear-contratos.html'">📄 Contratos</button>
+          <button onclick="window.location.href='crear-operador.html'">👤 Operadores</button>
+          <button onclick="window.location.href='crear-buques.html'">🚢 Buques</button>
+          <button onclick="window.location.href='crear-zonas.html'">📍 Zonas</button>
+          <button onclick="window.location.href='constructor-plantilla.html'">Editar Plantilla</button>
+          <button type="button" onclick="window.location.href='index.html'">Cerrar sesion</button>
+        </div>
+      </div>
+
+  <script src="admin-index.js"></script>
+</body>
+</html>

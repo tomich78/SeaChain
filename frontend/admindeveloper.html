@@ -6,42 +6,48 @@
   <link rel="stylesheet" href="styles-admin.css">
 </head>
 <body>
+
   <h1>Acceso Desarrollador</h1>
-  <form id="form-dev-login">
-    <label>Usuario:</label>
-    <input type="text" id="dev-user" required>
 
-    <label>Contraseña:</label>
-    <input type="password" id="dev-pass" required>
+  <div class="login-container"> <!-- 🔵 Contenedor agregado -->
+    <form id="form-dev-login">
+      <label>Usuario:</label>
+      <input type="text" id="dev-user" required>
 
-    <button type="submit">Ingresar</button>
-    <button type="button" onclick="window.location.href='index.html'">Volver</button>
+      <label>Contraseña:</label>
+      <input type="password" id="dev-pass" required>
 
-  </form>
+      <button type="submit">Ingresar</button>
+      <button type="button" onclick="window.location.href='index.html'">Volver</button>
+    </form>
 
-  <div id="login-error" style="color:red;"></div>
+    <div id="login-error" style="color:red;"></div>
+  </div>
 
   <script>
     document.getElementById('form-dev-login').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const usuario = document.getElementById('dev-user').value;
-      const contrasena = document.getElementById('dev-pass').value;
-  
-      const res = await fetch('/api/dev-login', {
+
+      const nombre = document.getElementById('dev-user').value;
+      const password = document.getElementById('dev-pass').value;
+
+      const res = await fetch('/auth/dev-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ usuario, contrasena })
+        body: JSON.stringify({ nombre, password })
       });
-  
+
       const data = await res.json();
-  
+
       if (res.ok) {
-        sessionStorage.setItem('devToken', data.token); // Guarda el token
+        sessionStorage.setItem('devToken', data.token);
         window.location.href = 'crear-empresa.html';
       } else {
-        document.getElementById('login-error').textContent = data.message;
+        document.getElementById('login-error').textContent = data.mensaje;
       }
     });
   </script>
+
 </body>
 </html>
+

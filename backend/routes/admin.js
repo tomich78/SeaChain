@@ -4,44 +4,51 @@ const pool = require('../db');
 
 // ✅ Crear operador
 router.post('/crear-operador', async (req, res) => {
-  const {username, password, zona, empresa_id, emailAdmin } = req.body;
+  const { username, password, zona, empresa_id } = req.body;
 
   try {
+    // Obtener ID del rol operador
     const rolResult = await pool.query("SELECT id FROM roles WHERE nombre = 'operador'");
     const rol_id = rolResult.rows[0]?.id;
     if (!rol_id) throw new Error('Rol operador no encontrado');
 
-    // 🔍 Verificar si ya existe la zona
-    let zona_id;
-    const zonaExistente = await pool.query('SELECT id FROM zonas WHERE nombre = $1', [zona]);
+    // Obtener zona_id usando nombre de zona y empresa_id
+    const zonaResult = await pool.query(
+      'SELECT id FROM zonas WHERE LOWER(nombre) = LOWER($1) AND empresa_id = $2',
+      [zona, empresa_id]
+    );
+    const zona_id = zonaResult.rows[0]?.id;
+    if (!zona_id) throw new Error('Zona no encontrada para esta empresa');
 
-    if (zonaExistente.rows.length > 0) {
-      zona_id = zonaExistente.rows[0].id;
-    } else {
-      const nuevaZona = await pool.query(
-        'INSERT INTO zonas (nombre) VALUES ($1) RETURNING id',
-        [zona]
-      );
-      zona_id = nuevaZona.rows[0].id;
+    // Verificar si ya existe un operador con ese nombre en esa zona
+    const existe = await pool.query(
+      `SELECT 1 FROM operadores o
+       JOIN usuarios u ON u.perfil_id = o.id
+       WHERE LOWER(u.nombre) = LOWER($1) AND o.zona_id = $2`,
+      [username, zona_id]
+    );
+    if (existe.rowCount > 0) {
+      return res.status(400).json({ message: 'Ya existe un operador con ese nombre en esa zona.' });
     }
 
-    const userResult = await pool.query(
-      `INSERT INTO usuarios (nombre, email, contrasena, rol_id, activo, empresa_id, zona_id)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
+    // 1. Crear operador
+    const operadorResult = await pool.query(
+      `INSERT INTO operadores (nombre, empresa_id, zona_id, activo, admin)
+       VALUES ($1, $2, $3, true, true)
        RETURNING id`,
-      [username, emailAdmin, password, rol_id, true, empresa_id, zona_id]
+      [username, empresa_id, zona_id]
     );
+    const operador_id = operadorResult.rows[0].id;
 
-    const usuario_id = userResult.rows[0].id;
-
-    // 🔗 Asociar operador con la zona usando zona_id
+    // 2. Crear usuario vinculado al operador
     await pool.query(
-      `INSERT INTO zonas_operadores (usuario_id, zona_id)
-       VALUES ($1, $2)`,
-      [usuario_id, zona_id]
+      `INSERT INTO usuarios (nombre, contrasena, rol_id, perfil_id, activo)
+       VALUES ($1, $2, $3, $4, true)`,
+      [username, password, rol_id, operador_id]
     );
 
     res.status(200).json({ message: 'Operador creado con éxito' });
+
   } catch (error) {
     console.error('❌ Error al crear operador:', error);
     res.status(500).json({
@@ -52,39 +59,39 @@ router.post('/crear-operador', async (req, res) => {
   }
 });
 
+
+
 // ✅ Crear buque
 router.post('/crear-buque', async (req, res) => {
-  const { nombre, zona, estado, empresa_id, emailAdmin, password } = req.body;
+  const { nombre, zona, estado, empresa_id, password } = req.body;
 
   try {
-    // Buscar o crear zona
-    let zona_id;
-    const zonaResult = await pool.query('SELECT id FROM zonas WHERE nombre = $1', [zona]);
-    if (zonaResult.rows.length > 0) {
-      zona_id = zonaResult.rows[0].id;
-    } else {
-      const nuevaZona = await pool.query('INSERT INTO zonas (nombre) VALUES ($1) RETURNING id', [zona]);
-      zona_id = nuevaZona.rows[0].id;
-    }
-
-    // Insertar buque
-    const buqueResult = await pool.query(
-      `INSERT INTO buques (nombre, empresa_id, estado, zona_id)
-       VALUES ($1, $2, $3, $4) RETURNING id`,
-      [nombre, empresa_id, estado || 'activo', zona_id]
+    // 1. Obtener zona_id a partir del nombre
+    const zonaResult = await pool.query(
+      `SELECT id FROM zonas WHERE LOWER(nombre) = LOWER($1) AND empresa_id = $2`,
+      [zona, empresa_id]
     );
+    const zona_id = zonaResult.rows[0]?.id;
+    if (!zona_id) throw new Error('Zona no encontrada para esta empresa');
 
+    // 2. Insertar buque
+    const buqueResult = await pool.query(
+      `INSERT INTO buques (nombre, empresa_id, zona_id, en_servicio, activo)
+       VALUES ($1, $2, $3, false, $4) RETURNING id`,
+      [nombre, empresa_id, zona_id, estado === 'inactivo' ? false : true]
+    );
     const buque_id = buqueResult.rows[0].id;
 
-    // Obtener rol buque
-    const rolBuque = await pool.query("SELECT id FROM roles WHERE nombre = 'buque'");
-    const rol_id = rolBuque.rows[0]?.id;
+    // 3. Obtener rol buque
+    const rolResult = await pool.query("SELECT id FROM roles WHERE nombre = 'buque'");
+    const rol_id = rolResult.rows[0]?.id;
     if (!rol_id) throw new Error('Rol buque no encontrado');
 
+    // 4. Insertar usuario asociado al buque
     await pool.query(
-      `INSERT INTO usuarios (nombre, email, contrasena, rol_id, activo, empresa_id, zona_id,buque_id)
-       VALUES ($1, $2, $3, $4, true, $5, $6, $7)`,
-      [nombre, emailAdmin, password, rol_id, empresa_id, zona_id, buque_id]
+      `INSERT INTO usuarios (nombre, contrasena, rol_id, perfil_id, activo)
+       VALUES ($1, $2, $3, $4, true)`,
+      [nombre, password, rol_id, buque_id]
     );
 
     res.status(200).json({
@@ -104,17 +111,102 @@ router.post('/crear-buque', async (req, res) => {
 });
 
 
+// Crear una nueva zona
+router.post('/crear-zona', async (req, res) => {
+  const { nombre, empresa_id } = req.body;
 
-//obtener zonas
-router.get('/zonas', async (req, res) => {
+  if (!nombre || !empresa_id) {
+    return res.status(400).json({ mensaje: 'Faltan datos obligatorios.' });
+  }
+
   try {
-    const result = await pool.query('SELECT id, nombre FROM zonas ORDER BY nombre');
+    // Verificar si ya existe la zona para esa empresa (insensible a mayúsculas)
+    const existe = await pool.query(
+      'SELECT 1 FROM zonas WHERE LOWER(nombre) = LOWER($1) AND empresa_id = $2',
+      [nombre, empresa_id]
+    );
+
+    if (existe.rows.length > 0) {
+      return res.status(409).json({ mensaje: 'Ya existe una zona con ese nombre para esta empresa.' });
+    }
+
+    // Insertar la nueva zona
+    await pool.query(
+      'INSERT INTO zonas (nombre, empresa_id) VALUES ($1, $2)',
+      [nombre, empresa_id]
+    );
+
+    res.status(201).json({ mensaje: 'Zona creada correctamente.' });
+  } catch (error) {
+    console.error('❌ Error al crear zona:', error);
+    res.status(500).json({ mensaje: 'Error al crear zona.' });
+  }
+});
+
+
+// Eliminar zona
+router.delete('/eliminarZonas/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await pool.query('DELETE FROM zonas WHERE id = $1', [id]);
+    res.status(200).json({ mensaje: 'Zona eliminada correctamente' });
+  } catch (error) {
+    console.error('❌ Error al eliminar zona:', error);
+    res.status(500).json({ mensaje: 'Error al eliminar zona' });
+  }
+});
+
+// Editar zona
+router.put('/EditarZonas/:id', async (req, res) => {
+  const { id } = req.params;
+  const { nombre, empresa_id } = req.body;
+
+  if (!nombre || !empresa_id) {
+    return res.status(400).json({ mensaje: 'Datos incompletos' });
+  }
+
+  try {
+    // Verificar si ya existe esa zona en la empresa
+    const existe = await pool.query(
+      'SELECT * FROM zonas WHERE nombre = $1 AND empresa_id = $2 AND id != $3',
+      [nombre, empresa_id, id]
+    );
+
+    if (existe.rows.length > 0) {
+      return res.status(409).json({ mensaje: 'Ya existe una zona con ese nombre en la empresa' });
+    }
+
+    await pool.query(
+      'UPDATE zonas SET nombre = $1 WHERE id = $2',
+      [nombre, id]
+    );
+
+    res.status(200).json({ mensaje: 'Zona actualizada correctamente' });
+  } catch (error) {
+    console.error('❌ Error al actualizar zona:', error);
+    res.status(500).json({ mensaje: 'Error al actualizar zona' });
+  }
+});
+
+
+
+// Obtener zonas por empresa
+router.get('/zonas/empresa/:empresa_id', async (req, res) => {
+  const { empresa_id } = req.params;
+
+  try {
+    const result = await pool.query(
+      'SELECT id, nombre FROM zonas WHERE empresa_id = $1 ORDER BY nombre',
+      [empresa_id]
+    );
     res.json(result.rows);
   } catch (error) {
-    console.error('❌ Error al obtener zonas:', error);
+    console.error('❌ Error al obtener zonas por empresa:', error);
     res.status(500).json({ message: 'Error al obtener zonas' });
   }
 });
+
 
 
 // Obtener una zona por ID
@@ -141,10 +233,18 @@ router.get('/operadores/:empresaId', async (req, res) => {
 
   try {
     const result = await pool.query(`
-      SELECT id, nombre, email
-      FROM usuarios
-      WHERE rol_id = (SELECT id FROM roles WHERE nombre = 'operador')
-      AND empresa_id = $1
+    SELECT 
+    u.id AS usuario_id,
+    o.id AS operador_id,
+    u.nombre,
+    u.contrasena,
+    z.nombre AS zona
+    FROM usuarios u
+    JOIN operadores o ON u.perfil_id = o.id
+    JOIN zonas z ON o.zona_id = z.id
+    WHERE u.rol_id = (SELECT id FROM roles WHERE nombre = 'operador')
+    AND o.empresa_id = $1
+
     `, [empresaId]);
 
     res.json(result.rows);
@@ -154,14 +254,25 @@ router.get('/operadores/:empresaId', async (req, res) => {
   }
 });
 
+
+
 router.get('/buques/:empresaId', async (req, res) => {
   const { empresaId } = req.params;
 
   try {
     const result = await pool.query(`
-      SELECT id, nombre, estado
-      FROM buques
-      WHERE empresa_id = $1
+    SELECT 
+    b.id AS buque_id,
+    u.id AS usuario_id,
+    b.nombre AS nombre_buque,
+    b.activo,
+    b.en_servicio,
+    u.contrasena,
+    z.nombre AS zona
+    FROM buques b
+    JOIN zonas z ON b.zona_id = z.id
+    JOIN usuarios u ON u.perfil_id = b.id AND u.rol_id = (SELECT id FROM roles WHERE nombre = 'buque')
+    WHERE b.empresa_id = $1
     `, [empresaId]);
 
     res.json(result.rows);
@@ -172,24 +283,45 @@ router.get('/buques/:empresaId', async (req, res) => {
 });
 
 //eliminar operador y buque
-router.delete('/operadores/:id', async (req, res) => {
+router.delete('/eliminarOperador/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
+    // 1. Obtener perfil_id (id del operador)
+    const result = await pool.query('SELECT perfil_id FROM usuarios WHERE id = $1', [id]);
+    const perfil_id = result.rows[0]?.perfil_id;
+
+    if (!perfil_id) {
+      return res.status(404).json({ message: 'Operador no encontrado o ya eliminado' });
+    }
+
+    // 2. Eliminar usuario
     await pool.query('DELETE FROM usuarios WHERE id = $1', [id]);
-    res.status(200).json({ message: 'Operador eliminado con éxito' });
+
+    // 3. Eliminar operador
+    await pool.query('DELETE FROM operadores WHERE id = $1', [perfil_id]);
+
+    res.status(200).json({ message: 'Operador y usuario eliminados con éxito' });
+
   } catch (error) {
     console.error('❌ Error al eliminar operador:', error);
     res.status(500).json({ message: 'Error al eliminar operador' });
   }
 });
 
-router.delete('/buques/:id', async (req, res) => {
-  const { id } = req.params;
+
+router.delete('/eliminarBuque/:usuarioId/:buqueId', async (req, res) => {
+  const { usuarioId, buqueId } = req.params;
 
   try {
-    await pool.query('DELETE FROM buques WHERE id = $1', [id]);
-    res.status(200).json({ message: 'Buque eliminado con éxito' });
+    // 1. Eliminar usuario
+    await pool.query('DELETE FROM usuarios WHERE id = $1', [usuarioId]);
+
+    // 2. Eliminar buque
+    await pool.query('DELETE FROM buques WHERE id = $1', [buqueId]);
+
+    res.status(200).json({ message: 'Buque y usuario eliminados con éxito' });
+
   } catch (error) {
     console.error('❌ Error al eliminar buque:', error);
     res.status(500).json({ message: 'Error al eliminar buque' });
@@ -198,32 +330,40 @@ router.delete('/buques/:id', async (req, res) => {
 
 
 
-// ✅ Crear empresa y admin automáticamente
+
 router.post('/crear-empresa', async (req, res) => {
   const { nombre, usuario, email, password } = req.body;
 
   try {
-    // 1. Crear empresa
+    // 1. Verificar si el nombre de la empresa ya existe
+    const existe = await pool.query(
+      `SELECT 1 FROM empresas WHERE LOWER(nombre) = LOWER($1)`,
+      [nombre]
+    );
+    if (existe.rowCount > 0) {
+      return res.status(400).json({ message: 'El nombre de la empresa ya está registrado' });
+    }
+
+    // 2. Crear empresa
     const empresaResult = await pool.query(
       `INSERT INTO empresas (nombre, email_contacto) VALUES ($1, $2) RETURNING id`,
       [nombre, email]
     );
     const empresa_id = empresaResult.rows[0].id;
 
-    // 2. Obtener rol admin
-    const rolResult = await pool.query("SELECT id FROM roles WHERE nombre = 'admin'");
+    // 3. Obtener rol admin
+    const rolResult = await pool.query(`SELECT id FROM roles WHERE nombre = 'admin'`);
     const rol_id = rolResult.rows[0]?.id;
     if (!rol_id) throw new Error('Rol admin no encontrado');
 
-    // 3. Crear usuario admin
+    // 4. Crear usuario admin vinculado a la empresa (perfil_id = empresa_id)
     await pool.query(
-      `INSERT INTO usuarios (nombre, email, contrasena, rol_id, activo, empresa_id)
-       VALUES ($1, $2, $3, $4, true, $5)`,
-      [usuario, email, password, rol_id, empresa_id]
+      `INSERT INTO usuarios (nombre, contrasena, rol_id, perfil_id, activo)
+       VALUES ($1, $2, $3, $4, true)`,
+      [usuario, password, rol_id, empresa_id]
     );
 
-    res.status(200).json({ 
-      message: 'Empresa y admin creados con éxito'});
+    res.status(200).json({ message: 'Empresa y admin creados con éxito' });
 
   } catch (error) {
     console.error('❌ Error al crear empresa:', error);
@@ -235,10 +375,28 @@ router.post('/crear-empresa', async (req, res) => {
   }
 });
 
-// ✅ Mostrar empresas
+
+
 router.get('/empresas', async (req, res) => {
   try {
-    const result = await pool.query('SELECT id, nombre, email_contacto FROM empresas ORDER BY id');
+    const result = await pool.query(`
+      SELECT 
+        e.id,
+        e.nombre AS empresa_nombre,
+        e.email_contacto,
+        u.nombre AS usuario_nombre,
+        u.contrasena
+      FROM 
+        empresas e
+      LEFT JOIN 
+        usuarios u
+      ON 
+        u.perfil_id = e.id
+      AND 
+        u.rol_id = (SELECT id FROM roles WHERE nombre = 'admin')
+      ORDER BY 
+        e.id
+    `);
     res.json(result.rows);
   } catch (error) {
     console.error('❌ Error al obtener empresas:', error);
@@ -246,8 +404,10 @@ router.get('/empresas', async (req, res) => {
   }
 });
 
+
+
 //eliminar empresa
-router.delete('/empresas/:id', async (req, res) => {
+router.delete('/eliminarEmpresa/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -258,66 +418,6 @@ router.delete('/empresas/:id', async (req, res) => {
     res.status(500).json({ message: 'Error al eliminar empresa' });
   }
 });
-
-
-router.post('/dev-login', async (req, res) => {
-  const { usuario, contrasena } = req.body;
-
-  try {
-    const result = await pool.query(
-      'SELECT * FROM dev_admins WHERE usuario = $1 AND contrasena = $2',
-      [usuario, contrasena]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(401).json({ message: 'Credenciales inválidas' });
-    }
-
-    // Token simple (puede ser UUID, JWT, etc.)
-    const token = 'tokendev-1234'; // ⚠️ en el futuro hacelo dinámico
-
-    res.status(200).json({ message: 'Login correcto' });
-  } catch (error) {
-    console.error('❌ Error en login desarrollador:', error);
-    res.status(500).json({ message: 'Error en servidor', error: error.message });
-  }
-});
-
-router.post('/login', async (req, res) => {
-  const { nombre, password } = req.body;
-
-  try {
-    const result = await pool.query(
-      'SELECT * FROM usuarios WHERE nombre = $1 AND contrasena = $2',
-      [nombre, password]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(401).json({ mensaje: 'Usuario o contraseña incorrectos' });
-    }
-
-    const usuario = result.rows[0];
-
-    // Obtener nombre de rol
-    const rolResult = await pool.query('SELECT nombre FROM roles WHERE id = $1', [usuario.rol_id]);
-    const rol = rolResult.rows[0]?.nombre || 'Desconocido';
-
-    res.json({
-      mensaje: 'Login exitoso',
-      rol: rol,
-      empresa_id: usuario.empresa_id,
-      emailAdmin: usuario.email,
-      buque_id: usuario.buque_id,
-      usuario_id: usuario.id,
-      zona_id: usuario.zona_id,
-      nombre: usuario.nombre
-    });
-  } catch (error) {
-    console.error('Error en login:', error);
-    res.status(500).json({ mensaje: 'Error en el servidor' });
-  }
-});
-
 
 module.exports = router;
 

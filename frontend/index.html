@@ -6,24 +6,15 @@
   <title>Sistema de Gestión de Buques</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-
 </head>
+
 <body>
   <header>
     <h2>Sistema de Gestión de Buques</h2>
-    <div class="dropdown">
-      <button><i class="fas fa-user"></i> Iniciar Sesión</button>
-      <div class="dropdown-content">
-        <a href="login.html?rol=buque"><i class="fas fa-ship"></i> Personal del Buque</a>
-        <a href="login.html?rol=operador"><i class="fas fa-cogs"></i> Operador</a>
-        <a href="login.html?rol=admin"><i class="fas fa-user-gear"></i> Administrador</a>
-      </div>
-    </div>
-
-    <a href="seguimiento.html" class="boton-seguimiento">
-      <i class="fas fa-search"></i> Seguimiento
+    <!-- Botón simple de iniciar sesión -->
+    <a href="login.html" class="boton-login">
+      <i class="fas fa-user"></i> Iniciar Sesión
     </a>
-
   </header>
 
   <section class="main-section">
@@ -34,19 +25,3 @@
   </section>
 </body>
 </html>
-
-<script>
-  const dropdown = document.querySelector('.dropdown');
-  let timeout;
-
-  dropdown.addEventListener('mouseenter', () => {
-    clearTimeout(timeout);
-    dropdown.querySelector('.dropdown-content').style.display = 'block';
-  });
-
-  dropdown.addEventListener('mouseleave', () => {
-    timeout = setTimeout(() => {
-      dropdown.querySelector('.dropdown-content').style.display = 'none';
-    }, 200); // espera 200 milisegundos antes de cerrar
-  });
-</script>

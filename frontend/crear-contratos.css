@@ -1,0 +1,86 @@
+/* crear-contratos.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #003366;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  .panel {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  h2 {
+    margin-top: 0;
+    color: #00509e;
+  }
+  
+  form input, form select, form button {
+    display: block;
+    width: 90%;
+    margin-bottom: 15px;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  form button {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  form button:hover {
+    background-color: #005f8a;
+  }
+  
+  #lista-contratos {
+    max-height: 500px;
+    overflow-y: auto;
+    margin-top: 10px;
+  }
+  
+  .contrato-item {
+    background-color: #e6f0ff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #00509e;
+  }
+
+  .contratos-activos {
+    background-color: #e6f0ff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #00509e;
+  }
+
+  .contratos-finalizados {
+    background-color: #e6f0ff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #00509e;
+  }
+  

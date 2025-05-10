@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Buque</title>
+  <link rel="stylesheet" href="styles-admin.css">
+</head>
+<body>
+
+  <div id="modal-buques" class="modal" style="display:none;">
+    <div class="modal-contenido">
+      <span id="cerrar-modal" style="cursor:pointer;">✖️</span>
+      <h3>Detalles del Buque</h3>
+      <div id="detalle-buques"></div>
+    </div>
+  </div>
+  
+
+  <h1>Crear Buques</h1>
+
+  <div class="contenedor">
+    <!-- IZQUIERDA: Formulario -->
+    <div class="formulario">
+      <form id="form-crear-buque">
+        <label>Nombre del buque:</label>
+        <input type="text" id="nombre" required placeholder="Ej: Buque Atlántico">
+
+        <label>Zona:</label>
+        <select id="zona" required>
+          <option value="">Seleccione una Zona</option>
+        </select>
+
+        <label>Estado:</label>
+        <select id="estado">
+          <option value="activo" selected>Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+
+        <button type="submit">Crear Buque</button>
+        <button type="button" onclick="window.location.href='admin-index.html'">Volver</button>
+      </form>
+
+      <div id="resultado-buque" style="margin-top: 20px;"></div>
+    </div>
+
+    <!-- DERECHA: Lista o mensaje -->
+    <div class="lista-empresas">
+      <h2>Buques</h2>
+      <div id="lista-buques">
+        <!-- Aquí se insertarán los operadores existentes -->
+      </div>
+    </div>
+  </div>
+
+  <script src="crear-buques.js"></script>
+</body>
+</html>

@@ -11,7 +11,7 @@ let textoFinalAcumulado = '';
 // Traer las actualizaciones temporales del buque
 async function cargarActualizaciones() {
     try {
-      const res = await fetch(`/api/operador/buque/${buqueId}/actualizaciones-temporales`);
+      const res = await fetch(`/admin/operador/buque/${buqueId}/actualizaciones-temporales`);
       const actualizaciones = await res.json();
   
       listaActualizaciones.innerHTML = '';
@@ -34,7 +34,7 @@ async function cargarActualizaciones() {
 
     async function obtenerReporteId() {
     try {
-        const res = await fetch(`/api/operador/reporte-activo/${buqueId}`);
+        const res = await fetch(`/admin/operador/reporte-activo/${buqueId}`);
         const data = await res.json();
         reporteId = data.reporteId;
         console.log('🆔 Reporte activo:', reporteId);
@@ -45,7 +45,7 @@ async function cargarActualizaciones() {
 
   async function guardarContenidoTemporal() {
     try {
-      const res = await fetch(`/api/reportes/${reporteId}/contenido`, {
+      const res = await fetch(`/admin/reportes/${reporteId}/contenido`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ async function cargarActualizaciones() {
 
   async function enviarMailFinal() {
     try {
-      const res = await fetch(`/api/reportes/${reporteId}/finalizar`, {
+      const res = await fetch(`/admin/reportes/${reporteId}/finalizar`, {
         method: 'PUT'
       });
   

@@ -6,9 +6,7 @@
   <link rel="stylesheet" href="styles-admin.css">
 
   <script>
-    // Verificar token antes de que cargue el body
-    // Reuse the existing token variable
-
+    const token = sessionStorage.getItem('devToken');
     if (!token) {
       alert('Acceso denegado');
       window.location.href = 'admindeveloper.html';
@@ -16,119 +14,49 @@
   </script>
 </head>
 <body>
+
   <h1>Crear Nueva Empresa</h1>
-  <form id="form-crear-empresa">
-    <label>Nombre de la empresa:</label>
-    <input type="text" id="nombreEmpresa" required>
 
-    <label>Email para admin:</label>
-    <input type="email" id="emailAdmin" required>
+  <div class="contenedor">
+    <!-- IZQUIERDA: Formulario crear empresa -->
+    <div class="crear-empresa">
+      <form id="form-crear-empresa">
+        <label>Nombre de la empresa:</label>
+        <input type="text" id="nombreEmpresa" required>
 
-    <button type="submit">Crear Empresa</button>
+        <label>Email de la empresa:</label>
+        <input type="email" id="emailAdmin" required>
 
-    <button onclick="logout()">Cerrar sesión</button>
-  </form>
+        <button type="submit">Crear Empresa</button>
+        <button type="button" onclick="logout()">Cerrar sesión</button>
+      </form>
 
-  <div id="resultado-creacion"></div>
+      <div id="resultado-creacion"></div>
+    </div>
 
+    <!-- DERECHA: Lista de empresas -->
+    <div class="lista-empresas">
+      <h2>Empresas Registradas</h2>
+      <div id="empresas-listado"></div>
+    </div>
+  </div>
 
-  <h2>Empresas registradas</h2>
-  <div id="lista-empresas"></div>
+  <!-- Modal de detalle de empresa -->
+  <div id="modal-empresa" class="modal" style="display:none;">
+    <div class="modal-contenido">
+      <span id="cerrar-modal" style="cursor:pointer;">✖️</span>
+      <h3>Detalles de Empresa</h3>
+      <p id="detalle-empresa"></p>
+    </div>
+  </div>
 
-  <script>
-    const token = sessionStorage.getItem('devToken');
-  
-    async function cargarEmpresas() {
-      const res = await fetch('/api/empresas');
-      const empresas = await res.json();
-  
-      const lista = empresas.map(e =>
-        `<tr>
-           <td>${e.id}</td>
-           <td>${e.nombre}</td>
-           <td>${e.email_contacto}</td>
-           <td><button onclick="eliminarEmpresa(${e.id})">🗑️ Eliminar</button></td>
-         </tr>`
-      ).join('');
-  
-      document.getElementById('lista-empresas').innerHTML = `
-        <table border="1" style="margin-top:20px;">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Email contacto</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody>${lista}</tbody>
-        </table>
-      `;
-    }
-  
-    async function eliminarEmpresa(id) {
-      if (!confirm('¿Seguro que querés eliminar esta empresa?')) return;
-  
-      const res = await fetch(`/api/empresas/${id}`, {
-        method: 'DELETE'
-      });
-  
-      if (res.ok) {
-        alert('Empresa eliminada');
-        cargarEmpresas();
-      } else {
-        alert('Error al eliminar empresa');
-      }
-    }
-  
-    // Cargar empresas al inicio
-    cargarEmpresas();
-  </script>
-  
-  
-  <script>
-    function logout() {
-      sessionStorage.removeItem('devToken');
-      window.location.href = 'admindeveloper.html';
-    }
-  </script>
+  <script src="crear-empresa.js"></script>
 
-  <script>
-    document.getElementById('form-crear-empresa').addEventListener('submit', async (e) => {
-      e.preventDefault();
+  <!-- Toast de éxito -->
+  <div id="toast-exito" class="toast" style="display: none;">
+    Empresa creada con éxito ✅
+  </div>
 
-      function generarUsuarioAdmin(nombreEmpresa) {
-        return nombreEmpresa.toLowerCase().replace(/\s+/g, '') + 'Admin';
-      }
-
-      const nombre = document.getElementById('nombreEmpresa').value;
-      const usuario = generarUsuarioAdmin(nombre);
-      const email = document.getElementById('emailAdmin').value;
-      const password = Math.floor(1000 + Math.random() * 9000).toString();
-      const token = sessionStorage.getItem('devToken'); // recuperamos el token guardado
-
-      const res = await fetch('/api/crear-empresa', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token
-        },
-        body: JSON.stringify({ nombre, usuario, email, password })
-      });
-
-      const data = await res.json();
-      console.log("📦 Datos del backend:", usuario);
-
-      if (res.ok) {
-        document.getElementById('resultado-creacion').innerHTML =
-          `<p style="color:green;">Empresa creada con éxito.</p>
-          <p>Usuario admin: <strong>${usuario}</strong></p>
-          <p>Contraseña: <strong>${password}</strong></p>`;
-      } else {
-        document.getElementById('resultado-creacion').innerHTML =
-          `<p style="color:red;">Error: ${data.message}</p>`;
-      }
-    });
-  </script>
 </body>
 </html>
+

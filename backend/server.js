@@ -1,4 +1,3 @@
-// backend/server.js
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -22,12 +21,17 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const actualizacionesRoutes = require('./routes/actualizaciones');
-const operadorBuqueRoutes = require('./routes/operador-buques');
+const operadorRoutes = require('./routes/operador');
+const contratosRoutes = require('./routes/contratos');
+const platillasRoutes = require('./routes/plantilla');
 
-app.use('/api', authRoutes); // Login general (/api/login)
-app.use('/api', adminRoutes); // Rutas para admin (/api/crear-operador, etc)
-app.use('/actualizaciones', actualizacionesRoutes);
-app.use('/api/operador', operadorBuqueRoutes);
+// 📌 Montaje de rutas
+app.use('/auth', authRoutes); // 👉 Login general y desarrollador
+app.use('/admin', adminRoutes); // 👉 Funciones de admin
+app.use('/actualizaciones', actualizacionesRoutes); // 👉 Actualizaciones de buques
+app.use('/operador', operadorRoutes); // 👉 Operador-buques
+app.use('/contratos', contratosRoutes); // 👉 Contratos
+app.use('/plantilla', platillasRoutes); // 👉 Plantilla
 
 // 🌐 Páginas públicas
 app.get('/', (req, res) => {
