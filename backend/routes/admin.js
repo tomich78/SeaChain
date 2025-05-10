@@ -419,5 +419,41 @@ router.delete('/eliminarEmpresa/:id', async (req, res) => {
   }
 });
 
+router.get('/clientes/empresa/:empresaId', async (req, res) => {
+  const { empresaId } = req.params;
+
+  try {
+    const result = await pool.query(`
+      SELECT id, nombre_empresa, email_contacto
+      FROM clientes
+      WHERE empresa_id = $1
+    `, [empresaId]);
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error('❌ Error al obtener clientes:', error);
+    res.status(500).json({ mensaje: 'Error al obtener clientes' });
+  }
+});
+
+router.put('/clientes/:id', async (req, res) => {
+  const { id } = req.params;
+  const { nombre_empresa, email_contacto } = req.body;
+
+  try {
+    await pool.query(`
+      UPDATE clientes
+      SET nombre_empresa = $1, email_contacto = $2
+      WHERE id = $3
+    `, [nombre_empresa, email_contacto, id]);
+
+    res.json({ mensaje: 'Cliente actualizado' });
+  } catch (error) {
+    console.error('❌ Error al actualizar cliente:', error);
+    res.status(500).json({ mensaje: 'Error al actualizar cliente' });
+  }
+});
+
+
 module.exports = router;
 
