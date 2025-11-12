@@ -1,62 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <title>Crear Empresa</title>
-  <link rel="stylesheet" href="styles-admin.css">
-
-  <script>
-    const token = sessionStorage.getItem('devToken');
-    if (!token) {
-      alert('Acceso denegado');
-      window.location.href = 'admindeveloper.html';
-    }
-  </script>
+  <title data-i18n="company.create_title"></title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="/css/crear-empresa.css">
+  <link rel="stylesheet" href="/css/navbar.css" />
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" defer></script>
+  <script src="/js/utils/realtime.js" defer></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/crear-empresa.js" defer></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
 </head>
-<body>
 
-  <h1>Crear Nueva Empresa</h1>
+<body class="protected">
+  <div id="navbar-container"></div>
+  <h1 data-i18n="company.create_heading"></h1>
 
   <div class="contenedor">
     <!-- IZQUIERDA: Formulario crear empresa -->
     <div class="crear-empresa">
       <form id="form-crear-empresa">
-        <label>Nombre de la empresa:</label>
+        <label data-i18n="company.name_label"></label>
         <input type="text" id="nombreEmpresa" required>
 
-        <label>Email de la empresa:</label>
-        <input type="email" id="emailAdmin" required>
+        <label data-i18n="company.email_label"></label>
+        <input type="email" id="emailAdmin">
 
-        <button type="submit">Crear Empresa</button>
-        <button type="button" onclick="logout()">Cerrar sesión</button>
+        <button type="submit" data-i18n="company.create_button"></button>
       </form>
 
       <div id="resultado-creacion"></div>
     </div>
 
-    <!-- DERECHA: Lista de empresas -->
-    <div class="lista-empresas">
-      <h2>Empresas Registradas</h2>
-      <div id="empresas-listado"></div>
-    </div>
-  </div>
 
-  <!-- Modal de detalle de empresa -->
-  <div id="modal-empresa" class="modal" style="display:none;">
-    <div class="modal-contenido">
-      <span id="cerrar-modal" style="cursor:pointer;">✖️</span>
-      <h3>Detalles de Empresa</h3>
-      <p id="detalle-empresa"></p>
-    </div>
-  </div>
-
-  <script src="crear-empresa.js"></script>
-
-  <!-- Toast de éxito -->
-  <div id="toast-exito" class="toast" style="display: none;">
-    Empresa creada con éxito ✅
-  </div>
-
+    <!-- Toast de éxito -->
+    <div id="toast-exito" class="toast" style="display: none;" data-i18n="company.success_toast"></div>
 </body>
-</html>
 
+</html>

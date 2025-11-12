@@ -1,0 +1,171 @@
+/* =========================================================
+   📊 ESTADÍSTICAS - LISTA DE PANELES
+   ========================================================= */
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: #f8fafc;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* ====== Contenedor general ====== */
+.stats-container {
+  max-width: 1100px;
+  margin: 80px auto;
+  padding: 20px 30px;
+}
+
+/* ====== Header ====== */
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.stats-header h1 {
+  font-size: 26px;
+  color: #023e8a;
+  font-weight: 800;
+}
+
+.btn-primary {
+  background: #0077b6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 119, 182, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #0096c7;
+  transform: translateY(-2px);
+}
+
+/* ====== Lista de paneles ====== */
+.panel-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* ====== Tarjeta ====== */
+.panel-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.panel-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, #0077b6 0%, #00b4d8 100%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 0;
+}
+
+.panel-card:hover::before {
+  opacity: 0.08;
+}
+
+.panel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* ====== Contenido ====== */
+.panel-info {
+  position: relative;
+  z-index: 1;
+}
+
+.panel-info h3 {
+  font-size: 18px;
+  color: #023e8a;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+}
+
+.panel-info .desc {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 8px 0;
+  line-height: 1.4em;
+}
+
+.panel-info .fecha {
+  font-size: 12px;
+  color: #777;
+}
+
+/* ====== Botones ====== */
+.panel-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  z-index: 2;
+}
+
+.panel-actions button {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.btn-ver {
+  background: #48cae4;
+  color: white;
+}
+.btn-ver:hover {
+  background: #0096c7;
+}
+
+.btn-editar {
+  background: #0077b6;
+  color: white;
+}
+.btn-editar:hover {
+  background: #005f8a;
+}
+
+.btn-eliminar {
+  background: #dc3545;
+  color: white;
+}
+.btn-eliminar:hover {
+  background: #b02a37;
+}
+
+/* ====== Estados ====== */
+.panel-list p {
+  text-align: center;
+  color: #666;
+  font-size: 15px;
+}
+
+.panel-list .error {
+  color: #d62828;
+  font-weight: 600;
+}

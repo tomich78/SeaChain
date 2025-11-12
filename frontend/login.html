@@ -1,29 +1,53 @@
+<!-- frontend/login.html -->
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="/js/i18n.js"></script>
+  <link rel="stylesheet" href="/css/navbarWithoutSession.css">
+  <script src="/js/navbarWithoutSession.js" defer></script>
+  <title data-i18n="login.title"></title>
+  <link rel="stylesheet" href="/css/styles.css" />
 </head>
-<body>
+
+<body class="protected">
+  <div id="navbar-container"></div>
   <div class="login-container">
-    <h1>Iniciar Sesión</h1>
+    <h1 data-i18n="login.heading"></h1>
     <form id="login-form">
-      <label>Usuario:</label>
-      <input type="text" id="dev-user" required />
+      <label data-i18n="login.email"></label>
+      <input type="email" id="email" required />
 
-      <label>Contraseña:</label>
-      <input type="password" id="dev-pass" required />
+      <label data-i18n="login.password"></label>
+      <div class="password-container">
+        <input type="password" id="password" required />
+        <button type="button" class="toggle-password" data-target="password">
+          <i class="fa-solid fa-eye"></i>
+        </button>
+      </div>
 
-      <button type="submit" id="btn-login">Ingresar</button>
-      <button type="button" onclick="window.location.href='index.html'">Volver</button>
+      <button type="submit" id="btn-login" data-i18n="login.submit"></button>
     </form>
 
-    <div id="login-error" style="color:red;"></div>
+    <!-- 🔹 Botón de "Iniciar sesión con Google" (compatible con Passport) -->
+    <div class="login-google-container">
+      <a href="/auth/google" class="btn-google">
+        <img src="/imagenes/google-icon.svg" alt="Google logo" class="google-icon">
+        <span>Iniciar sesión con Google</span>
+      </a>
+    </div>
+
+    <div id="login-error" style="color:red; margin-top: 10px;"></div>
+    <p data-i18n="login.no_account"></p>
   </div>
 
-  <script src="login.js"></script>
+  <script src="/js/login.js"></script>
 </body>
-</html>
 
+</html>

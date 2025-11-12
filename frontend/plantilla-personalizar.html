@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title data-i18n="templateCustomize.title"></title>
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="/css/plantilla.css" />
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
+</head>
+
+<body class="protected">
+  <div id="navbar-container"></div>
+  <!-- Loader global para toda la pantalla -->
+  <div id="loader-global" class="loader-overlay" style="display: none;">
+    <div class="loader-content">
+      <div class="spinner"></div>
+      <p id="loader-global-text" data-i18n="templateCustomize.loading"></p>
+    </div>
+  </div>
+
+  <!-- Loader específico para el iframe (vista previa PDF) -->
+  <div id="loader-preview" class="loader-overlay-preview" style="display: none;">
+    <div class="loader-content">
+      <div class="spinner"></div>
+      <p id="loader-preview-text" data-i18n="templateCustomize.generating_preview"></p>
+    </div>
+  </div>
+  <main class="main-grid">
+    <!-- Panel izquierdo -->
+    <section class="panel-izquierdo">
+      <iframe id="preview-pdf" style="width:100%; height:800px; border:1px solid #ccc; margin-top:20px;"></iframe>
+    </section>
+
+    <!-- Panel derecho con tabla Excel -->
+    <aside class="panel-derecho">
+      <button class="btn-aplicar" id="btn-aplicar" data-i18n="templateCustomize.generate_preview_button"></button>
+      <button class="btn-guardar" id="btn-guardar" data-i18n="templateCustomize.save_template_button"></button>
+      <h3 class="titulo-seccion" data-i18n="templateCustomize.current_logo"></h3>
+      <img id="logo-preview" src="/imagenes/empresaSinLogo.png" alt="Vista previa del logo"
+        style="max-width: 200px; display: block; margin-bottom: 10px;">
+
+
+      <label class="etiqueta" data-i18n="templateCustomize.change_logo"></label>
+      <input type="file" id="logo-upload" accept="image/*" class="input">
+      <h2 class="titulo-seccion" data-i18n="templateCustomize.preview_range"></h2>
+      <div id="vistaExcel"></div>
+    </aside>
+  </main>
+
+  <script src="../js/plantilla-personalizar.js"></script>
+
+</body>
+
+</html>

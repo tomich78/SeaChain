@@ -1,0 +1,79 @@
+body.protected {
+  display: none;
+}
+
+/* === Animación de entrada general para todas las páginas === */
+body {
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
+}
+
+body.page-loaded {
+  opacity: 1;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1;
+  margin: 0;
+  padding: 0;
+  padding-top: 70px; 
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Fondo oscuro para SweetAlert2 */
+.swal2-container {
+  background: rgba(0,0,0,0.45) !important;
+}
+
+/* Loader centrado */
+.loader {
+  position: fixed;
+  top: 60px; /* 👈 deja libre el espacio del navbar */
+  left: 0;
+  width: 100%;
+  height: calc(100% - 60px); /* 👈 evita tapar navbar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f8fc;
+  z-index: 9999;
+}
+
+/* Spinner animado */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid #e0e0e0;
+  border-top-color: #0077b6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+/* 🔔 Notificación roja */
+.icon-badge {
+  color: #e74c3c;
+}
+
+/* Opcional: color del icono principal */
+.tarjeta-header .icon {
+  color: #3498db;
+}
+
+/* Botones con íconos alineados */
+button .icon {
+  margin-right: 5px;
+}

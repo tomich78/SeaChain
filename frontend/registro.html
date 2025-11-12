@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title data-i18n="register.title"></title>
+  <link rel="stylesheet" href="/css/registro.css" />
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
+  <link rel="stylesheet" href="/css/navbarWithoutSession.css">
+  <script src="/js/navbarWithoutSession.js" defer></script>
+</head>
+
+<body class="protected">
+  <div id="navbar-container"></div>
+  <div class="registro-container">
+    <h1 data-i18n="register.heading"></h1>
+    <form id="registro-form">
+      <label data-i18n="register.name"></label>
+      <input type="text" id="nombre" required />
+
+      <label data-i18n="register.email"></label>
+      <input type="email" id="email" required />
+
+      <label data-i18n="register.password"></label>
+      <div class="password-container">
+        <input type="password" id="password" required />
+        <button type="button" class="toggle-password" data-target="password">
+          <i class="fa-solid fa-eye"></i>
+        </button>
+      </div>
+
+      <label data-i18n="register.confirm_password"></label>
+      <div class="password-container">
+        <input type="password" id="confirm-password" required />
+        <button type="button" class="toggle-password" data-target="confirm-password">
+          <i class="fa-solid fa-eye"></i>
+        </button>
+      </div>
+
+      <label data-i18n="register.account_type"></label>
+      <select id="tipo" required>
+        <option value="" disabled selected data-i18n="register.select_type"></option>
+        <option value="empresa" data-i18n="register.company"></option>
+        <option value="persona" data-i18n="register.person"></option>
+      </select>
+
+      <button type="submit" data-i18n="register.submit"></button>
+
+      <div class="registro-google-container">
+        <a href="/auth/google/register" class="btn-google">
+          <img src="/imagenes/google-icon.svg" alt="Google logo" class="google-icon">
+          <span data-i18n="register.with_google"></span>
+        </a>
+      </div>
+
+    </form>
+
+    <div id="registro-error" style="color:red;"></div>
+    <p data-i18n="register.have_account"></p>
+  </div>
+
+  <script src="/js/registro.js"></script>
+</body>
+
+</html>

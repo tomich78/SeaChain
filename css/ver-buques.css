@@ -1,0 +1,215 @@
+/* ====== Índice de secciones ======
+1. Estilo general
+2. Contenedor principal
+3. Formulario
+4. Lista de buques
+5. Modal
+6. Animaciones
+7. Responsividad
+================================= */
+
+h1 {
+  text-align: center;
+  color: #00557a;
+  margin-bottom: 30px;
+}
+
+/* ======= CONTENEDOR PRINCIPAL ======= */
+.contenedor {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ======= FORMULARIO ======= */
+.formulario {
+  flex: 1 1 350px;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.formulario label {
+  font-weight: bold;
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.formulario input,
+.formulario select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.formulario button {
+  width: 100%;
+  padding: 12px;
+  background-color: #00557a;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.formulario button:hover {
+  background-color: #003f5c;
+}
+
+#resultado-buque p {
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+/* ======= LISTA DE BUQUES ======= */
+.lista-empresas {
+  flex: 1 1 500px;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.lista-empresas h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #00557a;
+}
+
+/* Tarjeta de buque */
+.empresa-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #e9f4ff;
+  border: 1px solid #cde0f3;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.empresa-info {
+  flex-grow: 1;
+  font-weight: 500;
+  color: #003366;
+}
+
+.botones-de-registros button {
+  padding: 6px 10px;
+  font-size: 13px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+  color: white;
+}
+
+.botones-de-registros button:first-child {
+  background-color: #0077b6;
+}
+
+.botones-de-registros button:first-child:hover {
+  background-color: #005f8e;
+}
+
+.botones-de-registros button:last-child {
+  background-color: #e63946;
+}
+
+.botones-de-registros button:last-child:hover {
+  background-color: #c21825;
+}
+
+/* ======= MODAL ======= */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-contenido {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  position: relative;
+  animation: fadeInModal 0.3s ease forwards;
+}
+
+.modal-contenido h3 {
+  margin-top: 0;
+  color: #003366;
+}
+
+#cerrar-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 18px;
+  color: #888;
+}
+
+#cerrar-modal:hover {
+  color: #000;
+}
+
+.modal-contenido p {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+/* ======= ANIMACIONES ======= */
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutModal {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 700px) {
+  .contenedor {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .formulario,
+  .lista-empresas {
+    width: 100%;
+  }
+}

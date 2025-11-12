@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Gestión de Buques</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <title data-i18n="home.title"></title>
+  <link rel="stylesheet" href="/css/navbarWithoutSession.css">
+  <link rel="stylesheet" href="/css/index.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/navbarWithoutSession.js" defer></script>
+  <script src ="/js/index.js"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
 </head>
 
-<body>
-  <header>
-    <h2>Sistema de Gestión de Buques</h2>
-    <!-- Botón simple de iniciar sesión -->
-    <a href="login.html" class="boton-login">
-      <i class="fas fa-user"></i> Iniciar Sesión
-    </a>
-  </header>
+<body class="protected">
 
-  <section class="main-section">
-    <h1>Bienvenido al sistema más eficiente de gestión marítima</h1>
-    <p>
-      Facilitamos la comunicación entre buques, operadores de puerto y clientes, automatizando actualizaciones, reduciendo tiempos de respuesta y mejorando la trazabilidad de las operaciones.
-    </p>
-  </section>
+  <div id="navbar-container"></div>
+
+  <div class="contenedor">
+    <h1 data-i18n="home.welcome"></h1>
+    <p class="descripcion" data-i18n="home.description"></p>
+
+    <div class="botones">
+      <a href="/login.html" class="boton" data-i18n="home.login"></a>
+      <a href="/registro.html" class="boton secundario" data-i18n="home.register"></a>
+    </div>
+  </div>
+
+  <footer>
+    <p data-i18n="home.copyright"></p>
+  </footer>
 </body>
+
 </html>

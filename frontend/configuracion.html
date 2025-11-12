@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="config.title"></title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="/css/configuracion.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
+</head>
+
+<body class="protected">
+
+  <div id="navbar-container"></div>
+
+  <div class="container">
+    <!-- Panel izquierdo: Logo y frases -->
+    <div class="panel panel-izquierdo">
+      <h2 data-i18n="config.company_logo"></h2>
+
+      <img id="logo-preview" src="/imagenes/empresaSinLogo.png" alt="Vista previa del logo"
+        style="max-height: 100px; margin-bottom: 10px;">
+
+      <input type="file" id="logo-upload" accept="image/*" />
+      <button id="btn-subir-logo" data-i18n="config.save_logo"></button>
+
+      <div id="card-email-empresa" class="email-card">
+        <h2 data-i18n="config.contact_email"></h2>
+        <p id="email-actual" class="email-texto" data-i18n="config.loading"></p>
+        <button id="btn-editar-email" class="btn-editar-email" data-i18n="config.edit_email"></button>
+      </div>
+
+      <h2 data-i18n="config.common_phrases"></h2>
+
+      <div class="filtros-frases">
+        <label for="filtro-categoria" data-i18n="config.filter_category"></label>
+        <select id="filtro-categoria">
+          <option value="todas" data-i18n="config.all"></option>
+          <!-- Opciones dinámicas desde cargarCategorias() -->
+        </select>
+      </div>
+
+      <div class="scroll-panel">
+        <div id="lista-frases" class="frases-lista">
+          <!-- frases -->
+        </div>
+      </div>
+
+      <div class="acciones-frases">
+        <button id="btn-nueva-categoria" data-i18n="config.new_category"></button>
+        <button id="btn-nueva-frase" data-i18n="config.new_phrase"></button>
+      </div>
+    </div>
+
+    <!-- Panel derecho: Plantillas -->
+    <div class="panel panel-derecho">
+      <h2 data-i18n="config.select_template"></h2>
+
+      <div class="plantilla-carousel">
+        <div id="plantilla-preview" class="plantilla-preview-multiple">
+          <!-- Acá se insertará la vista previa con botones + imagen + nombre -->
+        </div>
+      </div>
+
+      <button id="btn-personalizar" class="btn-personalizar" data-i18n="config.select_template_button"></button>
+    </div>
+  </div>
+
+  </div>
+
+  <script src="../js/configuracion.js"></script>
+</body>
+
+</html>

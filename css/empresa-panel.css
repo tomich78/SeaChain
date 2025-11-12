@@ -1,0 +1,260 @@
+/* ====== Índice de secciones ======
+1. Estilos generales
+2. Encabezado
+3. Layout principal
+4. Panel genérico
+5. Panel de acciones
+6. Panel de miembros
+7. Panel de empresa
+8. Grupo empresa
+9. Botón agregar
+10. Panel agregar botón
+11. Modal fondo
+12. Modal contenido
+13. Botón cerrar
+14. Modal título
+15. Input buscador
+16. Resultados de búsqueda
+17. Usuario item
+18. Botón invitar
+19. Botón salir empresa
+================================= */
+
+
+h1 {
+  text-align: center;
+  color: #003366;
+  margin-bottom: 1px;
+}
+
+.empresa-layout {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.panel {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  min-width: 250px;
+  height: fit-content;
+}
+
+/* Acciones */
+.panel-acciones {
+  flex: 1;
+  max-width: 220px;
+}
+
+.acciones-botones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.acciones-botones button {
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.acciones-botones button:hover {
+  background-color: #005f87;
+}
+
+/* Miembros */
+.panel-miembros {
+  flex: 1;
+  max-width: 220px;
+}
+
+.lista-miembros {
+  list-style: none;
+  padding-left: 0;
+  font-size: 16px;
+}
+
+/* Empresa */
+.panel-empresa {
+  flex: 2;
+  max-width: 600px;
+}
+
+.empresa-datos {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.empresa-datos img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+}
+
+.datos-texto {
+  flex: 1;
+}
+
+.datos-texto h2 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+}
+
+.boton-agregar {
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.boton-agregar:hover {
+  background-color: #005f87;
+}
+
+.panel-agregar-boton {
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.grupo-empresa {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  flex: 2;
+}
+
+/* Modal fondo */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenido del modal */
+.modal-contenido {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 95%;
+  max-width: 600px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Botón de cerrar */
+.cerrar {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+}
+
+/* Título */
+.modal-contenido h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  color: #00557a;
+}
+
+/* Input buscador */
+#buscador-usuarios {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Resultados de búsqueda */
+.resultados-busqueda {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Cada usuario */
+.usuario-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+  font-size: 16px;
+}
+
+/* Botón de invitar */
+.usuario-item button {
+  background-color: #00557a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.usuario-item button:hover {
+  background-color: #00709f;
+}
+
+.texto-invitado {
+  color: green;
+  font-weight: bold;
+}
+
+#btn-salir-empresa {
+  margin-top: 20px;
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#btn-salir-empresa:hover {
+  background-color: #c82333;
+}
+
+#btn-eliminar-empresa {
+  background-color: #dc3545;
+}
+
+#btn-eliminar-empresa:hover {
+  background-color: #c82333;
+}
+
+.boton-agregar:disabled,
+.btn-disabled {
+  background-color: #ccc !important;
+  color: #666 !important;
+}

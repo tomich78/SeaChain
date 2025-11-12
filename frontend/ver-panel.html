@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title data-i18n="panel_view.title">Panel Viewer</title>
+
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/panel-view.css" />
+  <link rel="stylesheet" href="/css/navbar.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="/js/panel-view.js" defer></script>
+</head>
+
+<body class="protected">
+  <div id="navbar-container"></div>
+
+  <main class="panel-view-container">
+    <h2 id="panel-titulo"></h2>
+    <div id="panel-descripcion" class="panel-desc"></div>
+
+    <!-- 🔹 Área de componentes -->
+    <section id="panel-canvas" class="panel-canvas"></section>
+  </main>
+</body>
+</html>

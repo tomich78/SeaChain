@@ -1,0 +1,398 @@
+/* ====== Índice de secciones ======
+1. Estilo global
+2. Títulos
+3. Grid principal
+4. Paneles generales
+5. Formulario de actualización
+6. Historial de mensajes
+7. Botones editar y recargar
+8. Panel de frases y selects
+9. Inputs dobles (hora)
+10. Animaciones
+11. Responsive
+================================= */
+
+/* ===== 1. GLOBAL ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 100px 20px 20px 20px;
+  background-color: #f6f8fa;
+}
+
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ===== 2. TÍTULOS ===== */
+h1[data-i18n="shipPanel.heading"] {
+  text-align: center;
+  color: #00557a;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-top: 0;
+  color: #003366;
+}
+
+/* ===== 3. GRID PRINCIPAL ===== */
+.grid-panel {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr; /* proporción 20-40-40 */
+  gap: 15px;
+  align-items: flex-start;
+}
+
+/* ===== 4. PANELES ===== */
+.panel-frases,
+.formulario-actualizacion,
+.historial {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== 5. FORMULARIO DE ACTUALIZACIÓN ===== */
+.formulario-actualizacion {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.formulario-actualizacion textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+.formulario-actualizacion button {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.formulario-actualizacion button:hover {
+  background-color: #005f87;
+}
+
+/* ===== 6. HISTORIAL DE MENSAJES ===== */
+.historial {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;          /* evita scroll doble */
+  max-height: 60vh;          /* altura máxima visible del panel */
+  background-color: #fff;
+}
+
+.historial-header {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+  z-index: 2;
+}
+
+
+.historial-lista {
+  flex: 1;                   /* ocupa todo el espacio restante */
+  overflow-y: auto;          /* 👈 scroll interno */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #fafafa;
+}
+
+
+#historial {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+/* Tarjeta de mensaje */
+.registro {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: background 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.registro .cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.registro:hover {
+  background: #f3f7ff;
+}
+
+.registro .contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.registro .mensaje {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #222;
+  white-space: pre-wrap; /* respeta saltos de línea */
+}
+
+.registro .autor {
+  font-size: 13px;
+  color: #333;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.registro .editado {
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+}
+
+.registro .fecha-hora {
+  font-size: 12px;
+  color: #666;
+}
+
+.registro.temporal {
+  border-left: 4px solid #0077b6;
+}
+
+.registro .btn-editar {
+  background: transparent;
+  border: none;
+  color: #0077b6;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.registro .btn-editar:hover {
+  background: #e6f0f7;
+}
+
+/* ===== 7. BOTONES ===== */
+.btn-editar {
+  align-self: flex-end;
+  margin-top: 6px;
+  background-color: #0077b6;
+  color: white;
+  font-size: 12px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-editar:hover {
+  background-color: #005f87;
+}
+
+/* Botón recargar */
+#btn-recargar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #0077b6;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btn-recargar:hover {
+  color: #005f8e;
+}
+
+#btn-recargar.loading svg {
+  animation: spin 0.3s linear infinite;
+}
+
+/* ===== 8. PANEL DE FRASES ===== */
+.panel-frases {
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scroll-panel {
+  flex: 1;
+  display: flex;
+}
+
+.frases-lista {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 5px;
+  max-height: 50vh;
+  min-height: 150px;
+}
+
+.frase-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  margin-bottom: 6px;
+  background: #f1f7fb;
+  border-radius: 6px;
+  border: 1px solid #d0e2f1;
+}
+
+.frase-item {
+  padding: 6px 10px;
+  background: #e6f0f7;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.frase-item:hover {
+  background: #cfe4f5;
+}
+
+.boton-frase {
+  background: #0077b6;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.boton-frase:hover {
+  background: #005f86;
+}
+
+/* Selects */
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.select-wrapper select {
+  min-width: 140px;
+  max-width: 200px;
+  padding: 6px 30px 6px 10px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.select-wrapper::after {
+  content: "▼";
+  font-size: 12px;
+  color: #555;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* ===== 9. INPUT DOBLE HORA ===== */
+.input-doble-hora {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.input-hora {
+  width: 100px;
+  padding: 4px 6px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ===== 10. ANIMACIONES ===== */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== 11. RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .grid-panel {
+    grid-template-columns: 1fr;
+  }
+  .panel-frases,
+  .formulario-actualizacion,
+  .historial {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+  .frases-lista { max-height: 250px; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 10px; }
+  .frases-lista { max-height: 180px; }
+}

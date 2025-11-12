@@ -1,0 +1,150 @@
+/* ====== Índice de secciones ======
+1. Estilo global
+2. Títulos
+3. Contenedor principal
+4. Paneles
+5. Tarjetas
+6. Botones
+7. Header de tarjeta y notificaciones
+8. Responsividad
+================================= */
+
+body {
+  margin: 0;
+  padding-top: 80px; /* navbar fija */
+  background-color: #f2f2f2;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 30px;
+  flex-wrap: wrap;
+}
+
+.panel {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 500px; /* Aumentamos el tamaño del panel */
+  min-height: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #00557a;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.tarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tarjeta {
+  background-color: #e6f7ff;
+  border: 1px solid #b3e5fc;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  flex: 0 0 48%;  /* Dos por fila */
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.tarjeta:hover {
+  transform: scale(1.01);
+  background-color: #d2f1ff;
+}
+
+.tarjeta h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.tarjeta p {
+  margin: 2px 0;
+}
+
+.btn-iniciar {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-iniciar:hover {
+  background-color: #0056b3;
+}
+
+.tarjeta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badge-notificacion {
+  font-size: 18px;
+  color: red;
+}
+
+.btn-comunicacion {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-comunicacion:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .tarjeta {
+    flex: 0 0 100%; /* Una por fila en pantallas pequeñas */
+  }
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
+  vertical-align: middle;
+  margin-right: 8px;
+  margin-top: -3px;
+}
+
+.panel h2 {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  color: var(--text-color, #333);
+  margin-bottom: 10px;
+  font-weight: 600;
+}

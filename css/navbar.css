@@ -1,0 +1,305 @@
+/* ====== Índice de secciones ======
+1. Ajustes específicos para página index
+2. Navbar general
+3. Navbar (secciones: izquierda, centro, derecha)
+4. Botón hamburguesa
+5. Menú desplegable
+6. Usuario y logo
+7. Botones con ícono
+8. Badge de notificaciones
+================================= */
+
+body.index .navbar-left {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+body.index .navbar-center {
+  display: none;
+}
+
+
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #00557a;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.titulo-sistema {
+  font-size: 25px;
+  font-weight: 600;
+  color: white;
+}
+
+.navbar-right {
+  position: absolute;
+  right: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+  margin: 40px; /* ✅ Quitamos margin-right */
+}
+
+
+/* === MENÚ DESPLEGABLE === */
+.navbar-options {
+  position: absolute;
+  top: 100px;
+  right: 10px;
+  background: white;
+  color: #00557a;
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  min-width: 100px;
+  margin-right: 30px;
+
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-options.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.navbar-options span {
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: right;
+  width: 100%;
+}
+
+.navbar-options button {
+  background: none;
+  border: none;
+  color: #0a192f;
+  font-size: 14px;
+  margin: 6px 0;
+  text-align: right;
+  width: 100%;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.navbar-options button:hover {
+  color: #007bff;
+}
+
+#nombre-usuario {
+  font-weight: 'Inter', sans-serif;
+  margin-bottom: 8px;
+  text-align: right;
+}
+
+.logo {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+.icon-button {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column; /* 👈 icono arriba, texto abajo */
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  color: #ffffff;
+  background: none;
+  border: none;
+  font-size: 20px;
+  margin: 10px 0 4px 0;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  color: #007bff;
+}
+
+.icon-button span {
+  font-size: 12px;
+}
+
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;        /* justo debajo del botón */
+  left: 100%;        /* centrado respecto al botón */
+  transform: translateX(-50%) translateY(-10px);
+  background: white;
+  color: #00557a;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  min-width: 160px;
+  margin-top: 0px;
+
+  /* animación inicial oculta */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Items del menú */
+.dropdown-menu a {
+  width: 90%;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #000000;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background: #00557a;
+  color: white;
+}
+
+/* Hover en el contenedor → mostrar menú */
+.dropdown-container:hover .dropdown-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.badge-noti {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: red;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 12px;
+}
+
+.badge-msg {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: red;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 12px;
+}
+
+/* Estado inicial oculto */
+header.navbar {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+header.navbar.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* =========================================
+   🌍 Selector de idioma — Estilo SeaChain
+   ========================================= */
+
+.lang-selector {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06); /* leve transparencia */
+  border-radius: 8px;
+  padding: 4px 10px;
+  margin-left: 10px;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.lang-selector:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.lang-selector select {
+  background: transparent;
+  border: none;
+  color: #382f5e; /* texto claro */
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  padding-right: 18px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+}
+
+.lang-selector::after {
+  content: "▾";
+  position: absolute;
+  right: 8px;
+  font-size: 10px;
+  color: #868ca5;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+.lang-selector:hover::after {
+  color: #fff;
+}
+
+
+

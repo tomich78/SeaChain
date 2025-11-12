@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title data-i18n="notifications.title"></title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="/css/notificaciones.css" />
+  <link rel="stylesheet" href="/css/navbar.css" />
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
+</head>
+
+<body class="protected">
+
+  <div id="navbar-container"></div>
+  <h1 data-i18n="notifications.title"></h1>
+
+  <div class="noti-tabs">
+    <button id="tab-generales" class="tab activo" data-seccion="generales" data-i18n="notifications.general"></button>
+    <button id="tab-empresa" class="tab" data-seccion="empresa" data-i18n="notifications.company"></button>
+    <button id="tab-invitaciones" class="tab" data-seccion="invitaciones"
+      data-i18n="notifications.invitations"></button>
+    <button id="tab-conexiones" class="tab" data-seccion="conexiones" data-i18n="notifications.connections"></button>
+  </div>
+
+  <div class="noti-secciones">
+    <div id="empresa" class="seccion"><!-- notificaciones de empresa --></div>
+    <div id="invitaciones" class="seccion"><!-- invitaciones --></div>
+    <div id="conexiones" class="seccion"><!-- solicitudes de conexión --></div>
+    <div id="generales" class="seccion visible"><!-- notificaciones generales --></div>
+  </div>
+
+  <script src="/js/notificaciones.js"></script>
+</body>
+
+</html>

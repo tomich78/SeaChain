@@ -1,0 +1,271 @@
+/* ====== Índice de secciones ======
+1. Estilos base
+2. Header
+3. Botón Iniciar Sesión
+4. Sección principal de presentación
+5. Formulario de login
+6. Botón submit de login
+7. Formulario de registro
+8. Password container
+9. Botón del ojito
+================================= */
+
+/* === Estilos base === */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+  color: #003366;
+  padding-top: 80px;
+  min-height: 100vh;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* === Header === */
+header {
+  background-color: #00557a;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+/* === Botón Iniciar Sesión === */
+.boton-login {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #0077b6;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.boton-login:hover {
+  background-color: #005f86;
+}
+
+/* === Sección principal de presentación === */
+.main-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.main-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.main-section p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: auto;
+  color: #004466;
+}
+
+/* === Estilo para el formulario de login === */
+.login-container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.login-container h1 {
+  margin-bottom: 20px;
+  color: #003366;
+}
+
+#login-form input {
+  width: 95%;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* === SOLO botón de enviar (submit) === */
+#login-form button[type="submit"] {
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+#login-form button[type="submit"]:hover {
+  background-color: #005f8a;
+}
+
+
+
+/* === Estilo para el formulario de registro === */
+.registro-container {
+  max-width: 500px;
+  margin: 80px auto;
+  padding: 30px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.registro-container h1 {
+  margin-bottom: 20px;
+  color: #003366;
+}
+
+#registro-form input,
+#registro-form select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#registro-form button {
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+#registro-form button:hover {
+  background-color: #005f8a;
+}
+
+/* === Password container === */
+.password-container {
+  display: flex;
+  align-items: center;
+  margin: 10px auto;
+  max-height: 45px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  overflow: hidden;
+}
+
+.password-container input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: none !important;
+  background: none;
+  outline: none;
+}
+
+/* === Botón del ojito === */
+.password-container .toggle-password {
+  background: transparent !important; /* evita heredar estilos del submit */
+  border: none !important;
+  cursor: pointer;
+  padding: 0 10px;
+  color: #555;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;   /* evita ocupar todo el espacio */
+  height: 100%;
+}
+
+.password-container .toggle-password:hover {
+  color: #0077b6;
+}
+/* === Animaciones al cargar === */
+body {
+  opacity: 0;
+  transition: opacity 0.8s ease-in;
+}
+
+body.page-loaded {
+  opacity: 1;
+}
+
+/* Formularios que aparecen con slide-up */
+.login-container,
+.registro-container {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+body.page-loaded .login-container,
+body.page-loaded .registro-container {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Google */
+/* ====== Botón de Google ====== */
+/* ====== Botón de Google (Passport) ====== */
+.login-google-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #fff;
+  color: #444;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  padding: 10px 16px;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.btn-google:hover {
+  background-color: #f7f7f7;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.btn-google:active {
+  background-color: #eee;
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* 🌙 Compatibilidad con modo oscuro */
+body.dark-mode .btn-google {
+  background-color: #222;
+  color: #fff;
+  border-color: #555;
+}
+body.dark-mode .btn-google:hover {
+  background-color: #333;
+}

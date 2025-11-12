@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="messages.title"></title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/mensajes.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <script src="/js/utils/realtime.js" defer></script>
+    <script src="js/navbar.js" defer></script>
+    <script type="module" src="js/mensajes.js"></script>
+    <script src="/js/utils/checkAuth.js"></script>
+    <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+    <script src="/js/i18n.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="protected">
+    <div id="navbar-container"></div>
+
+    <div class="mensajes-container">
+        <!-- Panel izquierdo -->
+        <div class="conexiones">
+            <h3 data-i18n="messages.my_connections"></h3>
+            <ul id="lista-conexiones">
+                <!-- Se cargan dinámicamente -->
+            </ul>
+        </div>
+
+        <!-- Panel derecho -->
+        <div class="chat">
+            <div class="chat-header">
+                <span id="chat-usuario" data-i18n="messages.select_connection"></span>
+            </div>
+            <div id="chat-cuerpo" class="chat-cuerpo">
+                <p class="placeholder" data-i18n="messages.start_chat"></p>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="mensaje-input" placeholder="Escribe un mensaje..." disabled>
+                <button id="btn-enviar" disabled data-i18n="messages.send"></button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

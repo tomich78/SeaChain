@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title data-i18n="wall.title"></title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/estadisticas.css" />
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/js/i18n.js"></script>
+</head>
+
+<body class="protected">
+  <!-- ====== Navbar ====== -->
+  <div id="navbar-container"></div>
+
+  <main class="stats-container">
+    <div class="stats-header">
+      <h1 data-i18n="stats.title">Paneles de estadísticas</h1>
+      <button id="btn-nuevo-panel" class="btn-primary" data-i18n="stats.new_panel">
+        Crear nuevo panel
+      </button>
+    </div>
+
+    <div id="lista-paneles" class="panel-list">
+      <p data-i18n="stats.loading">Cargando paneles...</p>
+    </div>
+  </main>
+  <script src="/js/estadisticas.js"></script>
+</body>
+
+</html>
+
+

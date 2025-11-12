@@ -1,71 +1,122 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel de Contratos</title>
-  <link rel="stylesheet" href="crear-contratos.css">
+  <title data-i18n="contracts.panel_title"></title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="/css/crear-contratos.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
 </head>
-<body>
-  <h1>Panel de Contratos</h1>
+
+<body class="protected">
+
+  <div id="navbar-container"></div>
+
+  <h1 data-i18n="contracts.panel_title"></h1>
   <div class="container">
 
     <!-- Panel izquierdo: Formulario -->
     <div class="panel">
-      <h2>Agregar Contrato</h2>
+      <h2 data-i18n="contracts.add_contract"></h2>
       <form id="form-contrato">
 
-        <label>Seleccionar cliente existente:</label>
+        <label data-i18n="contracts.select_existing_client"></label>
         <select id="clienteExistente">
-          <option value="">-- Nuevo cliente --</option>
+          <option value="" data-i18n="contracts.new_client"></option>
         </select>
-        
+
         <!-- Solo mostrar si no se elige cliente existente -->
         <div id="nuevoClienteFields">
-          <label>Nombre del cliente:</label>
-          <input type="text" id="nombre" />
-        
-          <label>Email del cliente:</label>
+          <label data-i18n="contracts.client_name"></label>
+          <input type="text" id="nombre" required />
+
+          <label data-i18n="contracts.client_email"></label>
           <input type="email" id="email" />
         </div>
-        
-        <label for="buque">Buque</label>
-        <select id="buque" name="buque" required></select>
-        
-        <label for="operador">Operador</label>
+
+        <label data-i18n="contracts.select_existing_ship"></label>
+        <select id="buqueExistente">
+          <option value="" data-i18n="contracts.new_ship"></option>
+        </select>
+
+        <!-- Solo mostrar si no se elige buque existente -->
+        <div id="nuevoBuqueFields">
+          <label data-i18n="contracts.ship_name"></label>
+          <input type="text" id="nombreBuque" required />
+          <label data-i18n="contracts.ship_imo"></label>
+          <input type="text" id="imoBuque" required />
+          <label data-i18n="contracts.ship_trips"></label>
+          <input type="number" id="numViajes" />
+          <label data-i18n="contracts.ship_owner"></label>
+          <input type="text" id="owner" />
+        </div>
+
+        <label data-i18n="contracts.select_existing_zone"></label>
+        <select id="zonaExistente">
+          <option value="" data-i18n="contracts.new_zone"></option>
+        </select>
+
+        <!-- Solo mostrar si no se elige zona existente -->
+        <div id="nuevaZonaFields">
+          <label data-i18n="contracts.zone_name"></label>
+          <input type="text" id="nombreZona" required />
+        </div>
+
+        <label for="operador" data-i18n="contracts.operator"></label>
         <select id="operador" name="operador" required></select>
 
-        <label for="frecuenciaH">Frecuencia de horas</label>
-        <input type="number" id="frecuenciaH" name="frecuenciaH" required>
+        <label for="fecha_inicio_estimada" data-i18n="contracts.estimated_start"></label>
+        <input type="date" id="fecha_inicio_estimada" name="fecha_inicio_estimada">
 
-        <label for="fecha_inicio">Fecha de Inicio</label>
-        <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+        <label data-i18n="contracts.port_place"></label>
+        <input type="text" id="portOrPlace" />
 
-        <button type="submit">Crear Contrato</button>
-        <button type="button" onclick="window.location.href='admin-index.html'">Volver</button>
+        <button type="submit" data-i18n="contracts.create_button"></button>
       </form>
     </div>
 
     <!-- Panel derecho: Lista de contratos -->
     <div class="panel">
-      <h2>Contratos Activos</h2>
+      <h2 data-i18n="contracts.active_contracts"></h2>
       <div id="contratos-activos"></div>
     </div>
     <div class="panel">
-      <h2>Contratos Finalizados</h2>
+      <h2 data-i18n="contracts.finished_contracts"></h2>
       <div id="contratos-finalizados"></div>
     </div>
 
   </div>
 
-  <script src="crear-contratos.js"></script>
-  
   <div id="modal-contrato" class="modal" style="display: none;">
     <div class="modal-content">
-      <span class="close" onclick="cerrarModal()">&times;</span>
-      <h3>Detalles del Contrato</h3>
+      <span class="close" id="btnCerrarModal">&times;</span>
+      <h3 data-i18n="contracts.contract_details"></h3>
       <div id="detalle-contrato"></div>
     </div>
   </div>
+
+  <div id="modal-invitar-tripulante" class="modal" style="display: none;">
+    <div class="modal-contenido">
+      <span class="cerrar" id="btnCerrarModalInvitar">&times;</span>
+      <h2 data-i18n="contracts.invite_crew"></h2>
+      <button id="btnGenerarLink" data-i18n="contracts.generate_invite_link"></button>
+      <input type="text" id="buscador-tripulantes" placeholder="Buscar por nombre o email..." autocomplete="off">
+      <div id="resultados-tripulantes" class="resultados-busqueda">
+        <!-- Aquí se mostrarán los usuarios encontrados -->
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/crear-contratos.js" defer></script>
 </body>
+
 </html>

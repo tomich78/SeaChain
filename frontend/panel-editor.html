@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title data-i18n="panel_editor.title">Editor de Panel</title>
+
+  <!-- ====== CSS ====== -->
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/panel-editor.css">
+
+
+  <!-- ====== Librerías ====== -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/navbar.js" defer></script>
+
+  <!-- ====== Script específico ====== -->
+  <script src="/js/panel-editor.js" defer></script>
+</head>
+
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="editor-container">
+    <!-- 📚 Sidebar Izquierda -->
+    <aside class="sidebar">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="tablas">🧩 Tablas</button>
+        <button class="tab-btn" data-tab="propiedades">⚙️ Propiedades</button>
+      </div>
+
+      <div id="tab-tablas" class="tab-content">
+
+        <div class="prop-item">
+          <label for="tipoComponente">Tipo de componente</label>
+          <select id="tipoComponente">
+            <option value="chart">Gráfico</option>
+            <option value="table">Tabla</option>
+            <option value="indicator">Indicador</option>
+            <option value="text">Texto</option>
+          </select>
+        </div>
+
+        <div class="prop-item" id="bloque-operacion">
+          <label for="operacion">Operación</label>
+          <select id="operacion">
+            <option value="COUNT">Cantidad (COUNT)</option>
+            <option value="SUM">Suma (SUM)</option>
+            <option value="AVG">Promedio (AVG)</option>
+            <option value="MAX">Máximo (MAX)</option>
+            <option value="MIN">Mínimo (MIN)</option>
+          </select>
+        </div>
+
+        <h3>Tablas disponibles</h3>
+        <div id="lista-tablas" class="lista-tablas"></div>
+
+        <button id="btn-generar-grafico" class="btn-main">📊 Generar gráfico</button>
+        <hr>
+      </div>
+
+      <div id="tab-propiedades" class="tab-content hidden">
+        <div id="propiedades-dinamicas"></div>
+      </div>
+
+      <button id="btn-guardar-panel" class="btn-guardar">
+        💾 Guardar panel
+      </button>
+    </aside> <!-- 🔹 Cerrar aquí -->
+
+    <!-- 🎨 Canvas lateral (libre) -->
+    <div class="canvas-wrapper">
+      <div class="canvas-libre" id="canvas"></div>
+
+      <div class="zoom-controls">
+        <button id="zoomOut">−</button>
+        <button id="zoomIn">＋</button>
+        <button id="zoomReset">⟳</button>
+      </div>
+    </div>
+
+
+  </main>
+
+</body>
+
+</html>

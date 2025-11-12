@@ -1,57 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <title>Crear Buque</title>
-  <link rel="stylesheet" href="styles-admin.css">
+  <title data-i18n="ships.manage_title"></title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="/css/crear-buques.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
 </head>
-<body>
 
-  <div id="modal-buques" class="modal" style="display:none;">
-    <div class="modal-contenido">
-      <span id="cerrar-modal" style="cursor:pointer;">✖️</span>
-      <h3>Detalles del Buque</h3>
-      <div id="detalle-buques"></div>
-    </div>
-  </div>
-  
-
-  <h1>Crear Buques</h1>
+<body class="protected">
+  <div id="navbar-container"></div>
+  <h1 data-i18n="ships.manage_title"></h1>
 
   <div class="contenedor">
     <!-- IZQUIERDA: Formulario -->
     <div class="formulario">
       <form id="form-crear-buque">
-        <label>Nombre del buque:</label>
-        <input type="text" id="nombre" required placeholder="Ej: Buque Atlántico">
+        <label data-i18n="ships.name_label"></label>
+        <input type="text" id="nombreBuque" required placeholder="Ej: Ever Given">
 
-        <label>Zona:</label>
-        <select id="zona" required>
-          <option value="">Seleccione una Zona</option>
-        </select>
+        <label data-i18n="ships.imo_label"></label>
+        <input type="text" id="imoBuque" required placeholder="Ej: 1234567">
 
-        <label>Estado:</label>
-        <select id="estado">
-          <option value="activo" selected>Activo</option>
-          <option value="inactivo">Inactivo</option>
-        </select>
+        <label data-i18n="ships.trips_label"></label>
+        <input type="number" id="numViajes">
 
-        <button type="submit">Crear Buque</button>
-        <button type="button" onclick="window.location.href='admin-index.html'">Volver</button>
+        <label data-i18n="ships.owner_label"></label>
+        <input type="text" id="owner" placeholder="Ej: Pacific Basin">
+
+        <button type="submit" data-i18n="ships.register_button"></button>
       </form>
-
-      <div id="resultado-buque" style="margin-top: 20px;"></div>
     </div>
 
-    <!-- DERECHA: Lista o mensaje -->
+    <!-- DERECHA: Lista de buques -->
     <div class="lista-empresas">
-      <h2>Buques</h2>
-      <div id="lista-buques">
-        <!-- Aquí se insertarán los operadores existentes -->
-      </div>
+      <h2 data-i18n="ships.list_title"></h2>
+      <div id="lista-buques"></div>
     </div>
   </div>
 
-  <script src="crear-buques.js"></script>
+  <script src="../js/crear-buques.js"></script>
 </body>
+
 </html>

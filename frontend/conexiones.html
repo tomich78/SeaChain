@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="connections.title"></title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/conexiones.css">
+    <script src="/js/utils/realtime.js"></script>
+    <script src="/js/navbar.js" defer></script>
+    <script src="/js/conexiones.js" defer></script>
+    <script src="/js/utils/checkAuth.js"></script>
+    <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+    <script src="/js/i18n.js"></script>
+</head>
+
+<body class="protected">
+    <div id="navbar-container"></div>
+
+
+    <h1 data-i18n="connections.title"></h1>
+
+    <!-- 🔍 Buscador arriba -->
+   <section class="buscador">
+        <div class="buscador-wrapper">
+            <input type="text" id="buscarUsuario" data-i18n-placeholder="connections.search_placeholder"
+                autocomplete="off" />
+            <div id="resultados-busqueda" hidden></div>
+        </div>
+    </section>
+
+
+    <!-- 📩 Paneles lado a lado -->
+    <div class="paneles">
+        <!-- Solicitudes recibidas (con resultados de búsqueda arriba) -->
+        <section class="panel">
+            <h2 data-i18n="connections.requests"></h2>
+
+            <!-- 📩 Solicitudes -->
+            <div id="solicitudes"></div>
+        </section>
+
+        <!-- Mis conexiones -->
+        <section class="panel">
+            <h2 data-i18n="connections.my_connections"></h2>
+            <div id="misConexiones"></div>
+        </section>
+    </div>
+</body>
+
+</html>

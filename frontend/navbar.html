@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+<link rel="stylesheet" href="css/global.css">
+<script src="/js/utils/checkAuth.js"></script>
+<script src="/js/i18n.js"></script>
+
+<header class="navbar">
+  <div class="navbar-left">
+    <img src="/imagenes/logosinFondo-Photoroom.png" alt="Logo" class="logo">
+  </div>
+
+  <!-- 🌐 Selector de idioma -->
+  <div class="lang-selector">
+    <select id="lang-select">
+      <option value="es">🇪🇸 Español</option>
+      <option value="en">🇺🇸 English</option>
+    </select>
+  </div>
+
+  <div class="navbar-center">
+    <div class="icon-button" id="btn-inicio">
+      <i class="fa-solid fa-house"></i>
+      <span data-i18n="navbar.home"></span>
+    </div>
+
+    <div class="dropdown-container">
+      <button class="icon-button" id="btn-empresa" type="button">
+        <i class="fas fa-building"></i>
+        <span data-i18n="navbar.my_company"></span>
+      </button>
+    </div>
+
+    <div class="icon-button" id="btn-mensajes">
+      <i class="fas fa-envelope"></i>
+      <span data-i18n="navbar.messages"></span>
+      <span id="msg-badge" class="badge-msg" style="display: none;"></span>
+    </div>
+
+    <div class="icon-button" id="btn-conexiones">
+      <i class="fa-solid fa-user-group"></i>
+      <span data-i18n="navbar.connections"></span>
+    </div>
+
+    <div class="icon-button" id="btn-notificaciones">
+      <i class="fas fa-bell"></i>
+      <span data-i18n="navbar.notifications"></span>
+      <span id="noti-badge" class="badge-noti" style="display: none;"></span>
+    </div>
+
+    <div class="icon-button" id="btn-volver">
+      <i class="fa-solid fa-backward"></i>
+      <span data-i18n="navbar.back"></span>
+    </div>
+  </div>
+
+  <div class="navbar-right">
+    <button id="menu-toggle" class="hamburger">☰</button>
+    <nav id="navbar-options" class="navbar-options hidden">
+      <span id="nombre-usuario" data-i18n="navbar.user"></span>
+      <button id="btn-perfil" data-i18n="navbar.profile"></button>
+      <button id="btn-cerrar-sesion" data-i18n="navbar.logout"></button>
+    </nav>
+  </div>
+</header>

@@ -1,49 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <title>Clientes</title>
-  <link rel="stylesheet" href="styles-clientes.css" />
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="/css/styles-clientes.css" />
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
 </head>
-<body>
 
-  <h1>Clientes de la Empresa</h1>
+<body class="protected">
 
-  <!-- Contenedor único para tabla -->
-  <div class="clientes-card">
-    <h2>Listado de Clientes</h2>
-    <table class="tabla-clientes">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Email</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody id="lista-clientes">
-        <!-- Se rellenará dinámicamente -->
-      </tbody>
-    </table>
-  </div>
+  <div id="navbar-container"></div>
+  <h1 data-i18n="clients.title"></h1>
 
-  <!-- Modal para ver y editar -->
-  <div id="modal-cliente" class="modal" style="display:none;">
-    <div class="modal-content">
-      <span id="cerrar-modal" style="cursor:pointer;">❌</span>
-      <h2>Datos del Cliente</h2>
-      <p><strong>Nombre:</strong> <span id="modal-nombre"></span></p>
-      <p><strong>Email:</strong> <span id="modal-email"></span></p>
+  <div class="contenedor">
+    <!-- IZQUIERDA: Formulario -->
+    <div class="formulario">
+      <form id="form-crear-cliente">
+        <label data-i18n="clients.name_label"></label>
+        <input type="text" id="nombreCliente" required placeholder="Ej: Juan Pérez">
 
-      <h3>Editar</h3>
-      <input id="edit-nombre" type="text" placeholder="Nuevo nombre" />
-      <input id="edit-email" type="email" placeholder="Nuevo email" />
-      <button onclick="guardarEdicion()">💾 Guardar</button>
+        <label data-i18n="clients.email_label"></label>
+        <input type="email" id="emailCliente" placeholder="Ej: juan@mail.com">
+
+        <button type="submit" data-i18n="clients.register_button"></button>
+      </form>
+      <div id="resultado-clientes" style="margin-top: 20px;"></div>
+    </div>
+
+    <!-- DERECHA: Lista de clientes -->
+    <div class="lista-empresas">
+      <h2 data-i18n="clients.list_title"></h2>
+      <div id="lista-clientes">
+        <!-- Aquí se insertarán los clientes -->
+      </div>
     </div>
   </div>
 
-  <a href="admin-index.html" class="boton-fijo" title="Ir a otra página">Volver</a>
-
-  <script src="clientes-index.js"></script>
+  <script src="../js/clientes-index.js"></script>
 </body>
-</html>
 
+</html>

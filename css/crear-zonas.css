@@ -1,0 +1,152 @@
+/* ====== Índice de secciones ======
+1. Estilo general
+2. Título
+3. Contenedor principal
+4. Formulario de la izquierda
+5. Resultado debajo del formulario
+6. Lista de zonas
+7. Contenedor de cada zona
+8. Nombre de la zona
+9. Contenedor de botones
+10. Botones
+    10.1 Botón editar
+    10.2 Botón eliminar
+================================= */
+
+
+h1 {
+  text-align: center;
+  margin: 30px 0 10px;
+  color: #00557a;
+}
+
+/* Contenedor principal */
+.contenedor {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: auto;
+  gap: 30px;
+  padding: 20px;
+}
+
+/* Formulario de la izquierda */
+.formulario {
+  flex: 1 1 350px;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.formulario label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.formulario input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.formulario button {
+  width: 100%;
+  padding: 12px;
+  background-color: #00557a;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.formulario button:hover {
+  background-color: #003f5c;
+}
+
+/* Resultado debajo del formulario */
+#resultado-zonas {
+  font-size: 14px;
+  color: green;
+  text-align: center;
+}
+
+/* Lista de zonas */
+.lista-empresas {
+  flex: 1 1 350px;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.lista-empresas h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Contenedor de cada zona */
+.empresa-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e9f4ff;
+  border: 1px solid #cde0f3;
+  border-radius: 5px;
+  padding: 8px 12px; 
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* Nombre de la zona */
+.empresa-info {
+  font-weight: bold;
+  font-size: 16px;
+  color: #003366;
+}
+
+/* Contenedor de botones */
+.botones-de-registros {
+  display: flex;
+  gap: 10px;
+}
+
+/* Botones */
+.botones-de-registros button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+/* Botón editar */
+.botones-de-registros button:first-child {
+  background-color: #0077b6;
+}
+
+.botones-de-registros button:first-child:hover {
+  background-color: #005f8e;
+}
+
+/* Botón eliminar */
+.botones-de-registros button:last-child {
+  background-color: #e63946;
+}
+
+.botones-de-registros button:last-child:hover {
+  background-color: #c21825;
+}
+

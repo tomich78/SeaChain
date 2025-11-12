@@ -1,0 +1,238 @@
+/* ====== Índice de secciones ======
+1. Estilo global (body, headings)
+2. Buscador
+3. Paneles y grid
+4. Listados internos
+5. Botones
+6. Responsive
+7. Dropdown de resultados
+8. Spinner
+9. Badges
+================================= */
+
+/* ====== Estilo global ====== */
+
+h1 {
+  text-align: center;
+  margin: 30px 0 10px;
+  color: #00557a;
+}
+
+h2 {
+  margin-top: 0;
+  color: #444;
+}
+
+/* ====== Buscador ====== */
+.buscador {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.buscador input {
+  flex: 1;
+  max-width: 300px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.buscador input:focus {
+  border-color: #0077b6;
+}
+
+.buscador button {
+  padding: 8px 16px;
+  border: none;
+  background: #0077b6;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.buscador button:hover {
+  background: #005f86;
+}
+
+/* ====== Paneles y grid ====== */
+.paneles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.panel {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  min-height: 200px;
+}
+
+/* ====== Listados internos ====== */
+#solicitudes div,
+#misConexiones div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+#solicitudes div:hover,
+#misConexiones div:hover {
+  background: #f0f8ff;
+}
+
+/* ====== Botones ====== */
+button {
+  margin-left: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button[onclick*="Aceptar"] {
+  background: #28a745;
+  color: white;
+}
+
+button[onclick*="Rechazar"] {
+  background: #dc3545;
+  color: white;
+}
+
+button[onclick*="Eliminar"] {
+  background: #ff9800;
+  color: white;
+}
+
+button[onclick*="Conectar"] {
+  background: #0077b6;
+  color: white;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+  .paneles {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .panel {
+    width: 100%;
+  }
+}
+
+/* 🔍 Buscador */
+.buscador {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.buscador-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 300px; /* 👉 más ancho */
+}
+
+.buscador input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.buscador input:focus {
+  border-color: #0077b6;
+}
+
+/* ====== Dropdown de resultados ====== */
+
+/* Dropdown un poco más ancho que el input */
+#resultados-busqueda {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  width: 110%; /* 👉 más ancho que el input */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Lista de usuarios */
+.resultado-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.resultado-item:last-child {
+  border-bottom: none;
+}
+
+.resultado-item:hover {
+  background: #f0f8ff;
+}
+
+/* ====== Spinner ====== */
+.spinner {
+  width: 25px;
+  height: 25px;
+  border: 3px solid #ddd;
+  border-top: 3px solid #0077b6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 10px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ====== Badges ====== */
+.badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.badge-rechazada {
+  background: #dc3545;
+  color: white;
+}
+
+.badge-pendiente {
+  background: #e0e0e0;
+  color: #555;
+}
+
+
+

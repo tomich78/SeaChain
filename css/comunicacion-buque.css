@@ -1,0 +1,1202 @@
+/* ====== Índice de secciones ======
+1. Estilo global
+2. Grid principal
+3. Área de texto
+4. Botones
+5. Actualizaciones y texto final
+6. Panel de correo
+7. Bloque de frases comunes
+8. Dropdown de filtros
+9. PDF y Loader
+10. Utilidades
+11. Chat flotante
+12. Tabs y modos
+13. Formularios y filas de carga
+14. Vista previa de carga
+15. Panel de frases, formulario y SOF
+16. Edicion Sof
+================================= */
+
+/* ====== Estilo global ====== */
+
+.container {
+  max-width: 1600px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin: 30px 0 10px;
+  color: #00557a;
+}
+
+/* ====== Grid principal ====== */
+.grid-panel {
+  display: grid;
+  grid-template-columns: 25% 25% 50%; /* frases, formulario, SOF */
+  gap: 20px;
+  height: 100%; /* opcional si querés que ocupe todo el alto */
+}
+
+.col {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* ====== Área de texto ====== */
+textarea, #texto-operador {
+  width: 100%;
+  height: 150px;
+  resize: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* ====== Botones ====== */
+button {
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #005f8a;
+  transform: translateY(-2px);
+}
+
+.panel-correo button {
+  width: 100%;
+}
+
+/* Botón editar SOF */
+.btn-editar-sof {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background-color: #0077b6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-editar-sof:hover {
+  background-color: #005f8a;
+  transform: scale(1.05);
+}
+
+
+/* ====== Actualizaciones y texto final ====== */
+.actualizacion-item,
+#texto-final {
+  white-space: pre-line;
+}
+
+/* ====== Panel de correo ====== */
+.panel-correo {
+  margin-top: 20px;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.panel-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.panel-cabecera h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.panel-cabecera span {
+  font-size: 18px;
+}
+
+.panel-contenido {
+  max-height: 1000px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  opacity: 1;
+  padding: 5px;
+}
+
+.panel-contenido.oculto {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ====== Bloque de frases comunes ====== */
+.bloque-frases {
+  margin-bottom: 20px;
+}
+
+.frases-titulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  max-width: 500px;       /* igual que scroll-panel */ 
+}
+
+
+.titulo-principal {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+#filtro-frases {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Lista y cards */
+.scroll-panel {
+  max-height: 200px;
+  width: 100%; /* ocupa todo el ancho disponible */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  margin: 0; /* elimina desplazamiento a la derecha */
+  box-sizing: border-box;
+}
+
+.frases-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.frase-card {
+  background: #eef1f6;
+  border-radius: 6px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.frase-texto {
+  flex: 1;                      /* ocupa todo el ancho disponible */
+  word-break: break-word;       /* fuerza corte de palabras largas */
+  overflow-wrap: anywhere;      /* alternativa moderna */
+  white-space: normal;          /* permite múltiples líneas */
+}
+
+.frase-card span {
+  flex: 1;
+  color: #333;
+}
+
+.frase-card.frase-global {
+  background-color: #e1e7f5;
+  border-left: 5px solid #4b6cb7;
+  opacity: 0.85;
+}
+
+.frase-card.frase-global span {
+  color: #333;
+}
+
+.boton-frase,
+.boton-frase-sof {
+  background: #4b6cb7;
+  border: 1px solid #ccc;
+  color: #ffffff;       /* azul marino */
+  font-size: 16px;      /* más chico */
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.boton-frase:hover,
+.boton-frase-sof:hover {
+  background: #0077b6;
+}
+
+.boton-frase-sof {
+  color: #28a745;       /* verde para diferenciar */
+}
+
+.frases-botones button {
+  background: none;
+  border: none;
+  padding: 1px;
+  color: rgb(0, 0, 0);
+  font-size: 15px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.frases-botones button:hover {
+  color: #0077b6;
+}
+
+/* ====== Dropdown de filtros ====== */
+.dropdown-filtro {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-contenido {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  z-index: 999;
+  padding: 10px;
+}
+
+.dropdown-contenido select {
+  width: 180px;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+/* ====== PDF y Loader ====== */
+.pdf-container {
+  position: relative;
+  width: 100%;
+  height: 1000px;
+}
+
+#vista-previa-pdf {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+}
+
+#loader-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.loader-content {
+  text-align: center;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #0077b6;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: girar 1s linear infinite;
+  margin: 10px auto;
+}
+
+@keyframes girar {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ====== Utilidades ====== */
+.scroll-box {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+.emailOculto {
+  display: none;
+}
+
+.input-detallado {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+#input-rapido {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  box-sizing: border-box;
+  resize: vertical;     /* permite agrandarlo si quiere */
+  min-height: 60px;     /* altura mínima cómoda */
+  line-height: 1.4;
+}
+
+.input-doble-hora {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.input-doble-hora label {
+  font-size: 14px;
+  color: #333;
+}
+
+.input-hora {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.boton-chat {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #0077b6;
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center; /* 🟩 asegura centrado del contenido */
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+.boton-chat .icon {
+  width: 28px;
+  height: 28px;
+  stroke-width: 2.5;
+  color: #fff;
+  padding-left: 4px;
+}
+
+.boton-chat svg {
+  display: block;
+  width: 30px;
+  height: 30px;
+  transform: translateX(1px); /* 🟩 corrige desplazamiento visual */
+}
+
+/* ====== Chat flotante ====== */
+.chat-flotante {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 300px;
+  max-height: 400px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chat-flotante.visible {
+  transform: translateY(0%);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.chat-header {
+  background-color: #0077b6;
+  color: white;
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  flex-direction: column;
+  border-bottom: 1px solid #444;
+}
+
+.chat-cuerpo {
+  padding: 10px;
+  overflow-y: auto;
+  max-height: 340px; /* 👈 deja espacio para el header */
+  display: block;    /* 👈 flujo normal de bloques */
+}
+
+.registro .autor {
+  font-size: 14px;          /* 👈 un poco más chico */
+  color: #2a5d8f;           /* 👈 azul grisáceo elegante */
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.85;            /* 👈 leve suavizado visual */
+}
+
+.chat-flotante .registro {
+  background: #f1f1f1;
+  flex-shrink: 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 2px 6px;
+  margin: 3px 0;
+  max-width: 85%;
+}
+
+.chat-flotante .fecha-hora {
+  font-size: 10px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.chat-flotante .mensaje {
+  font-size: 12px;
+  line-height: 1.1;
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;    /* respeta saltos de línea y corta si hace falta */
+  word-wrap: break-word;    /* permite cortar palabras largas */
+  overflow-wrap: anywhere;  /* 🔥 rompe hasta palabras muy largas */
+}
+
+.chat-flotante .editado {
+  font-size: 10px;
+  color: #999;
+}
+
+
+.chat-flotante.visible {
+  transform: translateY(0%);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.chat-flotante .acciones {
+  margin-top: 4px;
+  display: flex;
+  gap: 4px;
+}
+
+.chat-flotante .acciones button {
+  font-size: 10px;
+  padding: 2px 6px;
+  border: 1px solid #ccc;
+  background: #2a5d8f;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-flotante .acciones button:hover {
+  background: #d9d9d9;
+}
+
+
+.tripulantes-dropdown {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px; /* 👈 extiende zona activa debajo del botón */
+}
+
+.tripulantes-btn {
+  background-color: transparent !important;
+  border: none;
+  color: #f0f0f0;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.2;
+  padding: 0; /* 👈 elimina espacio extra */
+  margin: 0;
+  transition: color 0.2s;
+}
+
+.tripulantes-btn:hover {
+  color: #00bfff;
+}
+
+.tripulantes-lista {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 1s ease, transform 1s ease;
+  position: absolute;
+  top: 22px;
+  left: 120%;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  border-radius: 6px;
+  min-width: 160px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.4);
+  padding: 6px;
+  z-index: 10;
+}
+
+.tripulantes-lista p,
+.tripulante-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0;
+  font-size: 13px;
+  color: #ddd;
+}
+
+.tripulante-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2px 0;
+  width: 100%;
+}
+
+
+.tripulante-nombre {
+  flex: 1;
+  text-align: left;
+  color: #ddd;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tripulante-botones {
+  display: flex;
+  align-items: center;
+  gap: 0; /* sin separación */
+}
+
+.tripulante-botones button {
+  background: none;
+  border: none;
+  color: #00bfff;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;      
+  margin: 0;            
+  width: auto;        
+  height: auto;
+  display: inline-block;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.tripulante-botones button + button {
+  margin-left: 2px; /* 👈 los pega totalmente */
+}
+
+.tripulante-botones button:hover {
+  transform: scale(1.2);
+  color: #1ec8ff;
+}
+
+
+.tripulantes-lista p:hover {
+  color: #00bfff;
+}
+
+/* Mostrar la lista al pasar el mouse */
+.tripulantes-dropdown:hover .tripulantes-lista {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+
+/* ====== Tabs y modos ====== */
+.tab-modo {
+  padding: 6px 10px; border: 1px solid #ddd; background:#0077b6; cursor:pointer; border-radius:8px;
+}
+.tab-modo.active { background:#e6f2ff; border-color:#5aa0ff; }
+
+.modo-switch {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.modo-switch .tab-modo.active {
+  background-color: #004c73; /* mismo hover/activo que uses */
+  color: #fff;
+  border-color: #00344f;
+}
+
+.separador-panel {
+  border: none;
+  border-top: 2px solid #ddd; /* color gris suave */
+  margin: 16px 0;
+}
+
+.row-fecha-hora label {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+/* Contenedor de cada fila de carga */
+/* ====== Formularios y filas de carga ====== */
+.fila {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.fila label {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+/* Select y input manual con mismo estilo */
+.fila select,
+.fila input[type="text"],
+.fila input[type="number"] {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fila select:focus,
+.fila input[type="text"]:focus {
+  outline: none;
+  border-color: #0077aa;
+  box-shadow: 0 0 4px rgba(0, 119, 170, 0.3);
+}
+
+/* Campo manual oculto inicialmente */
+#carga-bodega-nueva,
+#carga-destino-nueva,
+#carga-empresa-nueva {
+  margin-top: 6px;
+}
+
+
+/* ====== Vista previa de carga ====== */
+.vista-previa-carga {
+  margin-top: 15px;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.vista-previa-carga h4 {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+#preview-carga {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 13px;
+  font-family: monospace;
+  color: #333;
+}
+
+.input-cantidad-unidad {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.input-cantidad-unidad input {
+  flex: 1; /* El input ocupa casi todo */
+}
+
+.input-cantidad-unidad select {
+  width: 80px; /* Más angosto para no ocupar mucho */
+}
+
+.frases-layout {
+  display: flex;
+  gap: 20px;
+}
+
+/* Panel de frases */
+/* ====== Panel de frases, formulario y SOF ====== */
+.panel-frases {
+  background: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-frases h3 {
+  margin-bottom: 10px;
+}
+
+.categorias {
+  margin-bottom: 10px;
+}
+
+.scroll-panel {
+  flex: 1;
+  max-height: 500px; /* 👈 aumentá este valor para mostrar más frases */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px;
+  background: white;
+}
+
+/* Panel central */
+.panel-formulario {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Panel SOF */
+.panel-sof {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.btn-agregar {
+  margin-left: 10px;
+  background: #0077b6;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-agregar:hover {
+  background: #005f8a;
+}
+
+/* Edicion Sof */
+
+/* Contenedor con scroll interno */
+/* Contenedor con scroll más grande (ves muchas filas) */
+.swal2-popup .tabla-sof-contenedor {
+  max-height: 70vh;      /* más alto según pantalla */
+  overflow: auto;
+  border: 1px solid #ccc;
+}
+
+/* Tabla “fluida” */
+.swal2-popup .tabla-sof {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-size: 13px;
+  background: #fff;
+}
+
+/* Celdas */
+.swal2-popup .tabla-sof th,
+.swal2-popup .tabla-sof td {
+  border: 1px solid #ccc;
+  padding: 3px 4px;
+  text-align: left;
+  vertical-align: middle;
+  white-space: normal;
+}
+
+/* 🔧 Pisamos cualquier altura fija previa */
+.swal2-popup .tabla-sof td { height: auto !important; }
+
+/* Inputs/textarea SIN height forzado */
+.swal2-popup .tabla-sof input,
+.swal2-popup .tabla-sof textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  line-height: 1.4;
+  resize: none;
+  overflow: hidden;
+  min-height: 1.6em;
+  white-space: pre-wrap;   /* 👈 respeta saltos */
+  word-break: break-word;  /* 👈 corta si es muy largo */
+  height: auto !important;
+}
+
+/* Textareas que parten de 1 línea y crecen con JS */
+.swal2-popup .tabla-sof textarea {
+  text-align: left;       /* 👈 mejor para párrafos */
+  white-space: pre-wrap;  /* 👈 respeta saltos de línea */
+  overflow: hidden;       /* 👈 sin scroll interno */
+  resize: none;           /* opcional: sin manija */
+}
+
+/* Columnas angostas (fecha/día/horas) */
+.swal2-popup .tabla-sof th:nth-child(1), .swal2-popup .tabla-sof td:nth-child(1) { width: 110px; }
+.swal2-popup .tabla-sof th:nth-child(2), .swal2-popup .tabla-sof td:nth-child(2) { width: 90px; }
+.swal2-popup .tabla-sof th:nth-child(3), .swal2-popup .tabla-sof td:nth-child(3),
+.swal2-popup .tabla-sof th:nth-child(4), .swal2-popup .tabla-sof td:nth-child(4) { width: 95px; }
+
+/* Evento/Remarks ocupan el resto */
+.swal2-popup .tabla-sof th:nth-child(5), .swal2-popup .tabla-sof td:nth-child(5),
+.swal2-popup .tabla-sof th:nth-child(6), .swal2-popup .tabla-sof td:nth-child(6) { min-width: 220px; }
+
+
+/* Que la fila/celda nunca recorten lo que crece el textarea */
+.swal2-popup .tabla-sof tr,
+.swal2-popup .tabla-sof td {
+  height: auto !important;
+  overflow: visible !important;  /* <- evita cortes en la celda */
+  vertical-align: top !important;/* <- alinea arriba y no centra */
+}
+
+/* Solo Evento y Remarks alineados a la izquierda */
+.swal2-popup .tabla-sof td:nth-child(5) textarea,
+.swal2-popup .tabla-sof td:nth-child(6) textarea {
+  text-align: left !important;
+  white-space: pre-wrap !important;  /* respeta \n */
+  word-break: break-word !important; /* corta palabras largas */
+}
+
+
+.sof-cabecera-form {
+  padding: 10px 15px;
+  background: #f9fafb;       /* fondo gris claro */
+  border-radius: 8px;        /* bordes redondeados */
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+}
+
+.sof-cabecera-form h3 {
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #333;
+}
+
+.sof-cabecera-form .grid-cabecera {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+  gap: 12px 20px;                        /* espacio filas y columnas */
+}
+
+.sof-cabecera-form .campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.sof-cabecera-form label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: #555;
+}
+
+.sof-cabecera-form input {
+  padding: 4px 6px;          /* más compacto */
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.sof-cabecera-form input:focus {
+  outline: none;
+  border-color: #3b82f6;      /* azul */
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+}
+
+/* === Bloque contenedor === */
+.sof-texto-editable {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #222;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.sof-texto-editable br {
+  line-height: 1.8;
+}
+
+/* === Inputs embebidos === */
+.sof-texto-editable input {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fafafa;
+  padding: 2px 4px;
+  margin: 0 2px;
+  font-size: 13px;
+  color: #222;
+  vertical-align: middle;
+  height: 24px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+/* Ajustes por tipo */
+.sof-texto-editable input[type="number"] {
+  width: 70px;
+  text-align: right;
+}
+
+.sof-texto-editable input[type="text"] {
+  width: 100px;
+}
+
+/* === Al enfocar === */
+.sof-texto-editable input:focus {
+  outline: none;
+  border-color: #007bff;
+  background: #fff;
+  box-shadow: 0 0 2px rgba(0, 123, 255, 0.5);
+}
+
+/* === Spans automáticos (totales) === */
+.sof-texto-editable span.auto-turno,
+.sof-texto-editable span.auto-total {
+  font-weight: 500;
+  color: #1d3557;
+}
+
+.sof-texto-editable span.auto-unidad {
+  font-weight: 400;
+  color: #444;
+}
+
+/* === Para las filas de carga === */
+.fila-carga td {
+  background-color: #f9fcff;
+}
+
+/* === Ajuste responsive para pantallas pequeñas === */
+@media (max-width: 768px) {
+  .sof-texto-editable input[type="number"] {
+    width: 55px;
+  }
+
+  .sof-texto-editable input[type="text"] {
+    width: 80px;
+  }
+
+  .sof-texto-editable {
+    font-size: 13px;
+  }
+}
+
+.modo-bloqueado {
+  opacity: 0.6 !important;
+  pointer-events: none !important;
+}
+
+#modo-label {
+  user-select: none;
+}
+
+.sof-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Slider visual */
+.switch .slider {
+  background-color: #ccc;
+}
+.switch input:checked + .slider {
+  background-color: #4caf50;
+}
+.switch .slider span {
+  transform: translateX(0);
+}
+.switch input:checked + .slider span {
+  transform: translateX(24px);
+}
+
+#email-cliente strong { margin-right: .35rem; }
+
+/* Contenedor de la línea con el checkbox y el selector */
+#vista-cargas .format-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 15px;
+  flex-wrap: wrap; /* evita que se superponga si el panel se achica */
+}
+
+/* Bloque del selector de formato */
+.config-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+/* Label pequeño y gris */
+.config-item label[data-i18n="shipComm.format_label"] {
+  color: #555;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* Select estilizado pero compacto */
+.select-formato {
+  font-size: 13px;
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #333;
+  min-width: 160px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
+}
+
+.select-formato:hover {
+  border-color: #999;
+  background-color: #f8f8f8;
+}
+
+.select-formato:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 3px rgba(0,123,255,0.4);
+}
+
+
+.modo-envio-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  margin-right: 8px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 26px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #0078d7;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+

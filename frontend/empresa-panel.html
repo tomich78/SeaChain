@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="companyPanel.title"></title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="/css/empresa-panel.css" />
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
+</head>
+
+
+<body class="protected">
+
+  <div id="navbar-container"></div>
+
+  <!-- Loader SOLO para el contenido -->
+  <div id="loader" class="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <main id="empresa-panel" style="display:none;">
+
+    <header style="text-align: center; padding: 30px 0;">
+      <h1 data-i18n="companyPanel.my_company"></h1>
+    </header>
+
+    <main class="empresa-layout">
+
+      <!-- Miembros -->
+      <section class="panel panel-miembros">
+        <h2 data-i18n="companyPanel.members"></h2>
+        <ul class="lista-miembros" id="lista-miembros">
+          <li>
+            <span data-i18n="companyPanel.admins"></span>
+            <span id="admin-count">0</span>
+          </li>
+          <li>
+            <span data-i18n="companyPanel.operators"></span>
+            <span id="operador-count">0</span>
+          </li>
+          <li>
+            <span data-i18n="companyPanel.crewMember"></span>
+            <span id="tripulante-count">0</span> <!-- 👈 corregido -->
+          </li>
+        </ul>
+      </section>
+
+      <!-- Empresa -->
+      <div class="grupo-empresa">
+        <!-- Panel con los datos de la empresa -->
+        <section class="panel panel-empresa">
+          <div class="empresa-datos">
+            <img id="logo-empresa" src="/imagenes/logo.png" alt="Logo Empresa" />
+            <div class="datos-texto">
+              <h2 id="nombre-empresa" data-i18n="companyPanel.company_name"></h2>
+              <p><strong data-i18n="companyPanel.email"></strong> <span id="email-empresa">contacto@email.com</span></p>
+              <p><strong data-i18n="companyPanel.total_members"></strong> <span id="total-miembros">0</span></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Botón para agregar miembros -->
+        <section class="panel panel-agregar-boton">
+          <button id="btn-abrir-modal" class="boton-agregar" data-i18n="companyPanel.invite_members"></button>
+        </section>
+      </div>
+
+      <!-- Acciones -->
+      <section class="panel panel-acciones">
+        <h2 data-i18n="companyPanel.actions"></h2>
+        <div class="acciones-botones">
+          <!-- Botón para el tripulante. Oculto -->
+          <button id="btn-gestion-maritima" data-i18n="companyPanel.maritime_management"></button>
+          <button id="btn-contratos" data-i18n="companyPanel.contracts"></button>
+          <button id="btn-miembros" data-i18n="companyPanel.members_button"></button>
+          <button id="btn-buques" data-i18n="companyPanel.ships"></button>
+          <button id="btn-zonas" data-i18n="companyPanel.zones"></button>
+          <button id="btn-clientes" data-i18n="companyPanel.clients"></button>
+          <button id="btn-estadisticas" data-i18n="companyPanel.stats"></button>
+          <button id="btn-configuracion" style="display: none;" data-i18n="companyPanel.settings"></button>
+          <button id="btn-salir-empresa" style="display: none;" data-i18n="companyPanel.leave"></button>
+          <button id="btn-eliminar-empresa" style="display: none;" data-i18n="companyPanel.delete"></button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Modal invitación -->
+    <div id="modal-invitacion" class="modal" style="display: none;">
+      <div class="modal-contenido">
+        <span class="cerrar" id="btn-cerrar-modal">&times;</span>
+        <h2 data-i18n="companyPanel.invite_users"></h2>
+        <button id="btn-generar-link" data-i18n="companyPanel.generate_invite_link"></button>
+        <input type="text" id="buscador-usuarios" data-i18n-placeholder="companyPanel.search_placeholder"
+          autocomplete="off">
+        <div id="resultados-busqueda" class="resultados-busqueda">
+          <!-- Aquí se mostrarán los usuarios encontrados -->
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/empresa-panel.js"></script>
+  </main>
+</body>
+
+</html>

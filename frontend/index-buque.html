@@ -1,103 +1,96 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <title>Panel del Buque</title>
-  <link rel="stylesheet" href="styles-buques.css">
+  <title data-i18n="shipPanel.title"></title>
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="/css/styles-buques.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
+
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/realtime.js" defer></script>
+  <script src="/js/utils/checkAuth.js"></script>
 </head>
-<body>
-    <div class="container">
-      <h1>Panel del Buque</h1>
-  
-      <div class="grid-panel">
-        <!-- IZQUIERDA -->
-        <div class="formulario-actualizacion">
-            <label for="nueva-actualizacion"><strong>Nueva actualización</strong></label>
 
-            <label for="fecha-actualizacion"><strong>Fecha</strong></label>
-            <input type="date" id="fecha-actualizacion" required>
+<body class="protected">
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
 
-            <textarea id="nueva-actualizacion" rows="6" placeholder="Ej: 23-04-25 - El buque ha llegado al puerto..."></textarea>
-  
-            <button onclick="enviarActualizacion()">Cargar actualización</button>
+  <div class="container">
+    <h1 data-i18n="shipPanel.heading"></h1>
+
+    <!-- Mensajes -->
+    <div id="mensaje-servicio" style="color: red; font-weight: bold; margin-bottom: 20px;"></div>
+
+    <div class="grid-panel">
+      <!-- IZQUIERDA: Frases comunes -->
+      <div class="panel-frases">
+        <h2 data-i18n="shipPanel.common_phrases"></h2>
+        <div class="categorias">
+          <div class="select-wrapper">
+            <select id="filtro-frases">
+              <option value="todas">Todas</option>
+            </select>
+          </div>
         </div>
-  
-        <!-- DERECHA -->
-        <div class="historial">
-          <h2>Historial acumulado</h2>
-          <div id="historial">Cargando...</div>
+        <div class="scroll-panel">
+          <div id="lista-frases" class="frases-lista">
+            <!-- frases -->
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTRO: Formulario -->
+      <div class="formulario-actualizacion">
+        <h2 for="nueva-actualizacion" data-i18n="shipPanel.new_update"></h2>
+
+        <!-- Bloque hora desde/hasta -->
+        <div class="input-doble-hora">
+          <label for="hora-desde" data-i18n="shipPanel.from"></label>
+          <input type="time" id="hora-desde" class="input-hora">
+
+          <label for="hora-hasta" data-i18n="shipPanel.to"></label>
+          <input type="time" id="hora-hasta" class="input-hora">
+        </div>
+
+        <textarea id="nueva-actualizacion" rows="6" data-i18n="shipPanel.placeholder_example"
+          data-i18n-attr="placeholder"></textarea>
+
+        <button type="button" id="btn-voz" data-i18n="shipPanel.voice_button"></button>
+        <button id="btn-enviar-actualizacion" data-i18n="shipPanel.send_update"></button>
+      </div>
+
+      <!-- DERECHA: Historial -->
+      <div class="historial">
+        <div class="historial-header">
+          <h2 data-i18n="shipPanel.history"></h2>
+          <button id="btn-recargar" data-i18n="shipPanel.reload" data-i18n-attr="aria-label" aria-label="Recargar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0114.13-3.36L23 10M1 14l5.36 4.36A9 9 0 0020.49 15"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="historial" class="historial-lista" data-i18n="shipPanel.loading">
+
         </div>
       </div>
     </div>
-  
-    <script>
-
-      // Obtener el buqueId desde la URL
-      const buqueId = sessionStorage.getItem('buque_id');
-      const operadorId = sessionStorage.getItem('usuario_id'); // si lo necesitas
-
-      //Verificación
-      if (!buqueId || !operadorId) {
-        alert('Falta información de buque u operador. Redirigiendo al login...');
-        window.location.href = 'login.html';
-      }
-
-      async function cargarHistorial() {
-        try {
-          const res = await fetch(`/actualizaciones/${buqueId}`);
-          if (res.ok) {
-            const data = await res.json();
-            document.getElementById('historial').textContent = data.contenido;
-          } else {
-            document.getElementById('historial').textContent = 'Sin historial aún.';
-          }
-        } catch (err) {
-          document.getElementById('historial').textContent = 'Error al cargar historial.';
-          console.error(err);
-        }
-      }
-  
-        async function enviarActualizacion() {
-          const fecha = document.getElementById('fecha-actualizacion').value;
-          const nuevaActualizacion = document.getElementById('nueva-actualizacion').value;
-          const contenidoFinal = `${fecha} - ${nuevaActualizacion}`;
-
-          if (!nuevaActualizacion.trim()) {
-              alert('Escribe una actualización antes de enviar.');
-              return;
-          }
-
-          try {
-              const res = await fetch('/actualizaciones', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                  buque_id: buqueId,
-                  operador_id: operadorId,
-                  nueva_actualizacion: contenidoFinal
-              })
-              });
-
-              if (res.ok) {
-              document.getElementById('nueva-actualizacion').value = '';
-              cargarHistorial();
-              } else {
-              alert('Error al enviar actualización');
-              }
-          } catch (err) {
-              alert('Error de conexión con el servidor');
-              console.error(err);
-          }
-    }
-    window.addEventListener('DOMContentLoaded', () => {
-    const hoy = new Date().toISOString().split('T')[0];
-    document.getElementById('fecha-actualizacion').value = hoy;
-    });
 
 
-  
-      cargarHistorial();
-    </script>
-  </body>
+  </div>
+
+  <script src="../js/index-buque.js"></script>
+</body>
+
 </html>
-

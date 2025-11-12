@@ -1,22 +1,34 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <title>Crear Zona</title>
-  <link rel="stylesheet" href="styles-admin.css">
+  <title data-i18n="zones.create_title"></title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="/css/crear-zonas.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
 </head>
-<body>
-  <h1>Crear Zonas</h1>
+
+<body class="protected">
+
+  <div id="navbar-container"></div>
+  <h1 data-i18n="zones.create_heading"></h1>
 
   <div class="contenedor">
     <!-- IZQUIERDA: Formulario -->
     <div class="formulario">
       <form id="form-crear-zona">
-        <label>Zona:</label>
+        <label data-i18n="zones.zone_label"></label>
         <input type="text" id="zona" required placeholder="Ej: Quilmes">
 
-        <button type="submit">Crear Zona</button>
-        <button type="button" onclick="window.location.href='admin-index.html'">Volver</button>
+        <button type="submit" data-i18n="zones.create_button"></button>
       </form>
 
       <div id="resultado-zonas" style="margin-top: 20px;"></div>
@@ -24,13 +36,14 @@
 
     <!-- DERECHA: Lista de zonas -->
     <div class="lista-empresas">
-      <h2>Zonas registradas</h2>
+      <h2 data-i18n="zones.list_title"></h2>
       <div id="lista-zonas">
         <!-- Aquí se insertarán las zonas existentes -->
       </div>
     </div>
   </div>
 
-  <script src="crear-zonas.js"></script>
+  <script src="../js/crear-zonas.js"></script>
 </body>
+
 </html>

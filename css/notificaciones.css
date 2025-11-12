@@ -1,0 +1,221 @@
+/* ====== Índice de secciones ======
+1. Estilo global
+2. Títulos
+3. Tabs de notificaciones
+4. Secciones de notificaciones
+5. Ítem de notificación
+6. Contenido de notificación (título, texto, fecha)
+7. Badges
+8. Botones (general, aceptar, rechazar, ignorar, link)
+9. Indicador (dot)
+================================= */
+
+
+h1 {
+  color: #00557a;
+  text-align: center;
+}
+
+.noti-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 30px 0;
+}
+
+.tab {
+  padding: 10px 20px;
+  background: #e0e0e0;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #333;
+  transition: background 0.2s;
+  position: relative;
+}
+
+.tab {
+  position: relative; /* el dot se posiciona relativo a este botón */
+  padding-right: 18px; /* espacio para que no tape el texto */
+}
+
+.tab:hover {
+  background: #ccc;
+}
+
+.tab.activo {
+  background: #00557a;
+  color: white;
+}
+
+.noti-secciones {
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.seccion {
+  display: none;
+}
+
+.seccion.visible {
+  display: block;
+}
+
+.noti-item {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.noti-item:last-child {
+  border-bottom: none;
+}
+
+.noti-titulo {
+  font-size: 17px;
+  font-weight: 600;
+  color: #00557a;
+  margin-bottom: 10px;
+}
+
+.noti-texto {
+  font-size: 15px;
+  color: #333;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.noti-texto button {
+  background-color: #00557a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+}
+
+.noti-texto button:hover {
+  background-color: #0078a3;
+}
+
+.noti-texto span {
+  font-weight: bold;
+  color: #2e7d32; /* verde suave para estado aceptado */
+}
+
+.badge-nuevo {
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+
+.noti-item {
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.noti-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.noti-titulo {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.noti-mensaje {
+  font-size: 13px;
+  color: #555;
+  margin-top: 3px;
+}
+
+.noti-fecha {
+  font-size: 12px;
+  color: #999;
+}
+
+.btn {
+  padding: 8px 14px;
+  margin-left: 8px;
+  border: none;
+  border-radius: 6px;
+  background-color: #0077b6;   /* azul por defecto */
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn:hover {
+  background-color: #005f8a;
+  transform: translateY(-1px);
+}
+
+/* ✅ Botón aceptar */
+.btn-aceptar {
+  background-color: #0077b6; /* verde */
+}
+.btn-aceptar:hover {
+  background-color: #035886;
+}
+
+/* ❌ Botón rechazar */
+.btn-rechazar {
+  background-color: #345b72; /* rojo */
+}
+.btn-rechazar:hover {
+  background-color: #5988a3;
+}
+
+/* ❔ Botón ignorar */
+.btn-ignorar {
+  background-color: #95a5a6; /* gris */
+}
+.btn-ignorar:hover {
+  background-color: #7f8c8d;
+}
+
+.dot {
+  position: absolute;
+  top: 6px;     /* distancia desde arriba */
+  right: 6px;   /* distancia desde la derecha */
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.btn-link {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.btn-link:hover {
+  background: #e6f2f9;
+}

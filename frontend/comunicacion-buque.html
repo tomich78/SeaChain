@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="shipComm.center_title"></title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="/css/comunicacion-buque.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/js/i18n.js"></script>
+</head>
+
+<body class="protected">
+  <div id="navbar-container"></div>
+
+  <div class="container">
+    <h1 data-i18n="shipComm.center_title"></h1>
+    <h2 id="nombre-buque" style="text-align:center; color:#00557a; margin-top:5px;"></h2>
+    <div class="grid-panel">
+      <!-- PANEL 1: Categorías + frases -->
+      <div class="col panel-frases">
+        <h3 data-i18n="shipComm.common_phrases"></h3>
+        <div class="categorias">
+          <select id="filtro-frases">
+            <option value="todas" data-i18n="shipComm.all_categories"></option>
+          </select>
+          <button class="btn-agregar" id="btnAbrirFrase" data-i18n="shipComm.new_phrase"></button>
+        </div>
+        <div class="scroll-panel">
+          <div id="lista-frases" class="frases-lista">
+            <!-- frases -->
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 2: Formulario de carga -->
+      <div class="col panel-formulario">
+
+        <!-- Switch de modo -->
+        <div class="modo-switch">
+          <button class="tab-modo" data-modo="actualizaciones" id="btnModoActualizaciones"
+            data-i18n="shipComm.updates"></button>
+          <button class="tab-modo" data-modo="carga" id="btnModoCargas" data-i18n="shipComm.loads"></button>
+          <button class="tab-modo" data-modo="descarga" id="btnModoDescargas" data-i18n="shipComm.discharges"></button>
+
+        </div>
+
+
+        <div class="color-field">
+          <label for="color">Color:</label>
+          <input type="color" id="color" name="color" value="#FFFFFF">
+        </div>
+
+        <!-- Vista actualizaciones -->
+        <div id="vista-actualizaciones">
+
+          <!-- 🔽 Select agregado antes del campo Evento -->
+          <label for="tipo-frase" data-i18n="shipComm.phrase_type"></label>
+          <select id="tipo-frase" class="input-detallado">
+            <option value="actividad" selected data-i18n="shipComm.general"></option>
+            <option value="cabecera:nor_tendered" data-i18n="shipComm.nor_tendered"></option>
+            <option value="cabecera:vessel_moored" data-i18n="shipComm.vessel_moored"></option>
+            <option value="cabecera:vessel_unmoored" data-i18n="shipComm.vessel_unmoored"></option>
+            <option value="cabecera:loading_started" data-i18n="shipComm.loading_started"></option>
+            <option value="cabecera:loading_completed" data-i18n="shipComm.loading_completed"></option>
+            <option value="cabecera:cargo_documents_on_board" data-i18n="shipComm.cargo_docs"></option>
+          </select>
+
+          <h3 data-i18n="shipComm.add_update"></h3>
+          <div id="modo-detallado">
+
+            <label for="fecha" data-i18n="shipComm.date_time"></label>
+            <input type="date" id="fecha" class="input-detallado">
+            <input type="text" id="dia" class="input-detallado" placeholder="Día" disabled hidden>
+            <div class="input-doble-hora">
+              <label data-i18n="shipComm.from"></label>
+              <input type="time" id="hora-desde" class="input-hora">
+              <label data-i18n="shipComm.to"></label>
+              <input type="time" id="hora-hasta" class="input-hora">
+            </div>
+
+            <label for="fecha" data-i18n="shipComm.events"></label>
+            <textarea id="evento" placeholder="Evento" class="input-detallado" rows="2"></textarea>
+            <textarea id="remarks" placeholder="Observaciones..." class="input-detallado" rows="4"></textarea>
+          </div>
+
+          <div id="modo-rapido" style="display:none;">
+            <p style="font-size: 13px; color: #666; margin-bottom: 10px;" data-i18n="shipComm.hint_comma"></p>
+
+            <textarea id="input-rapido" placeholder="Ej: 15/08/2025, 06:00-18:00, Descarga, Todo en orden"></textarea>
+          </div>
+
+          <button id="btnAgregarSOF" data-i18n="shipComm.add_sof"></button>
+          <button id="toggle-modo" style="margin-bottom: 10px;" data-i18n="shipComm.toggle_fast_mode"></button>
+        </div>
+
+        <!-- Vista cargas -->
+        <div id="vista-cargas" style="display:none;">
+          <h3 data-i18n="shipComm.add_load_update"></h3>
+
+          <label data-i18n="shipComm.date"></label>
+          <input type="date" id="carga-fecha" class="input-detallado" data-campo="dia">
+          <input type="text" id="carga-dia" class="input-detallado" placeholder="Día" disabled hidden>
+          <div class="input-doble-hora">
+            <label data-i18n="shipComm.from"></label>
+            <input type="time" id="carga-hora-desde" class="input-hora">
+            <label data-i18n="shipComm.to"></label>
+            <input type="time" id="carga-hora-hasta" class="input-hora">
+          </div>
+
+          <div id="bodegas-container-cargas"></div>
+          <button type="button" id="btnAgregarBodegaCargas" data-i18n="shipComm.add_hold"></button>
+
+          <div class="format-row">
+            <label>
+              <input type="checkbox" id="toggle-editar-vista-previa">
+              <span data-i18n="shipComm.edit_preview"></span>
+            </label>
+
+            <div class="config-item">
+              <label data-i18n="shipComm.format_label">Formato:</label>
+              <select id="select-formato-texto" class="select-formato"></select>
+            </div>
+          </div>
+
+          <textarea id="preview-operacion-carga" readonly></textarea>
+          <button id="btnAgregarSOFCargas" data-i18n="shipComm.add_sof_loads"></button>
+        </div>
+
+        <div id="vista-descargas" style="display:none;">
+          <h3 data-i18n="shipComm.add_discharge_update"></h3>
+
+          <label data-i18n="shipComm.date"></label>
+          <input type="date" id="descarga-fecha" class="input-detallado" data-campo="dia">
+          <input type="text" id="descarga-dia" class="input-detallado" placeholder="Día" disabled hidden>
+
+          <div class="input-doble-hora">
+            <label data-i18n="shipComm.from"></label>
+            <input type="time" id="descarga-hora-desde" class="input-hora">
+            <label data-i18n="shipComm.to"></label>
+            <input type="time" id="descarga-hora-hasta" class="input-hora">
+          </div>
+
+          <div id="bodegas-container-descargas"></div>
+          <button type="button" id="btnAgregarBodegaDescargas" data-i18n="shipComm.add_hold"></button>
+
+          <div class="format-row">
+            <label>
+              <input type="checkbox" id="toggle-editar-vista-previa-descarga">
+              <span data-i18n="shipComm.edit_preview"></span>
+            </label>
+
+            <div class="config-item">
+              <label data-i18n="shipComm.format_label">Formato:</label>
+              <select id="select-formato-texto-descarga" class="select-formato"></select>
+            </div>
+          </div>
+
+          <textarea id="preview-operacion-descarga" readonly></textarea>
+          <button id="btnAgregarSOFDescargas" data-i18n="shipComm.add_sof_discharges"></button>
+        </div>
+
+        <hr class="separador-panel">
+
+        <div id="panel-correo" class="panel-correo">
+          <h3 data-i18n="shipComm.send_sof"></h3>
+
+          <div id="email-container">
+            <p>
+              <strong data-i18n="shipComm.dest_email"></strong>
+              <span id="email-cliente"></span>
+              <input type="email" id="email-input" style="display: none; width: 100%;" />
+            </p>
+            <button id="editar-email" data-i18n="shipComm.edit_email"></button>
+            <button id="restaurar-email" style="display: none;" data-i18n="shipComm.restore_contract_email"></button>
+          </div>
+
+          <!-- 🔹 Nuevo switch de modo -->
+          <div class="modo-envio-container">
+            <label for="modo-envio" style="font-weight:bold;" data-i18n="shipComm.send_mode"></label><br>
+            <label class="switch">
+              <input type="checkbox" id="modo-envio">
+              <span class="slider round"></span>
+            </label>
+            <span id="modo-texto-label">Texto</span>
+            <span id="modo-pdf-label" style="display:none;">PDF</span>
+          </div>
+
+          <button id="btnEnviarMailFinal" data-i18n="shipComm.send_mail"></button>
+
+          <hr class="separador-panel">
+
+          <button id="btnFinalizarTrayecto" data-i18n="shipComm.finish_journey"></button>
+        </div>
+
+
+
+      </div>
+
+      <!-- PANEL 3: SOF PDF -->
+      <div class="col panel-sof">
+        <h3>SOF</h3>
+        <button class="btn-editar-sof" id="btnEditarSOF" data-i18n="shipComm.edit_sof"></button>
+        <div class="pdf-container">
+          <iframe id="vista-previa-pdf"></iframe>
+          <div id="loader-preview" class="loader-overlay-preview">
+            <div class="loader-content">
+              <div class="spinner"></div>
+              <p id="loader-preview-text" data-i18n="shipComm.generating_preview"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Panel flotante chat -->
+    <div id="boton-chat" class="boton-chat">
+      <i data-lucide="ship" class="icon"></i>
+      <span id="chat-notificacion" class="badge" style="display:none;">0</span>
+    </div>
+
+    <!-- Ventana flotante del chat -->
+    <div id="chat-flotante" class="chat-flotante">
+      <div class="chat-header">
+        <!-- Título principal -->
+        <span data-i18n="shipComm.ship_updates" class="titulo-principal"></span>
+
+        <!-- Subtítulo tipo botón (Tripulantes) -->
+        <div class="tripulantes-dropdown">
+          <button class="tripulantes-btn" id="btn-tripulantes" data-i18n="shipComm.crew"></button>
+          <div class="tripulantes-lista" id="lista-tripulantes">
+            <!-- Se llenará dinámicamente -->
+          </div>
+        </div>
+      </div>
+
+      <div id="historial" class="chat-cuerpo"></div>
+    </div>
+
+    <script src="../js/comunicacion-buque.js"></script>
+</body>
+
+</html>

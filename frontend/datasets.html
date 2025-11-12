@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="datasets.create_title"></title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="/css/datasets.css">
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" defer></script>
+    <script src="/js/utils/realtime.js" defer></script>
+    <script src="/js/navbar.js" defer></script>
+    <script src="/js/datasets.js" defer></script>
+    <script src="/js/utils/checkAuth.js"></script>
+    <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+    <script src="/js/i18n.js"></script>
+</head>
+
+<body>
+
+    <div id="navbar-container"></div>
+
+    <div class="datasets-container">
+        <li class="table-item">
+            <div class="table-header" onclick="toggleColumnas('buques')">
+                <span>🛳️ buques</span>
+            </div>
+            <ul id="cols-buques" class="column-list hidden">
+                <li><input type="checkbox" data-tabla="buques" data-columna="id"> id</li>
+                <li><input type="checkbox" data-tabla="buques" data-columna="nombre"> nombre</li>
+                <li><input type="checkbox" data-tabla="buques" data-columna="zona_id"> zona_id</li>
+            </ul>
+        </li>
+
+        <main class="main-panel">
+
+            <div class="section-block">
+                <label data-i18n="datasets.filters">🔍 Filters</label>
+                <div id="filtrosContainer"></div>
+
+                <button id="btnAgregarFiltro" class="btn-sm" data-i18n="datasets.add_filter">
+                    ➕ Add Filter
+                </button>
+            </div>
+
+            <section id="constructorDataset">
+                <h2 data-i18n="datasets.builder_title">Constructor de Dataset</h2>
+
+                <div class="section-block">
+                    <label data-i18n="datasets.columns">📊 Columnas seleccionadas</label>
+                    <div id="columnasSeleccionadas" class="scrollable"></div>
+                </div>
+
+                <div class="section-block">
+                    <label data-i18n="datasets.filters">🔍 Filtros</label>
+                    <div id="filtrosContainer"></div>
+                </div>
+
+                <button id="btnPreview" class="btn-primary" data-i18n="datasets.preview">🔎 Ver vista previa</button>
+                <button id="btnGuardar" class="btn-success" data-i18n="datasets.save">💾 Guardar dataset</button>
+            </section>
+
+            <section id="previewDataset" class="hidden">
+                <h3 data-i18n="datasets.preview_title">Vista previa (primeros 50 registros)</h3>
+                <table id="tablaPreview"></table>
+            </section>
+        </main>
+    </div>
+
+</body>
+
+</html>

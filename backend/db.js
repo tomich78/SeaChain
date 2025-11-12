@@ -1,8 +1,9 @@
 // backend/db.js
 const { Pool } = require('pg');
+require('dotenv').config();
 
 const pool = new Pool({
-  connectionString: 'postgresql://postgres:gPRnEfEITJGmBHmPsBibFxdKuaOfSGPB@caboose.proxy.rlwy.net:17055/railway',
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }

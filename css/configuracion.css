@@ -1,0 +1,389 @@
+/* ====== Índice de secciones ======
+1. Estilo global
+2. Layout principal (container, paneles)
+3. Paneles y contenido
+4. Formularios y inputs
+5. Botones
+6. Scroll panel y frases
+7. Plantillas y carrusel
+8. Email y edición de contacto
+9. Responsive
+================================= */
+
+
+/* ====== Layout principal (container, paneles) ====== */
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 55px;
+  max-width: 1200px;
+  margin: auto;
+  flex-wrap: nowrap; /* ❗ NO permitir que se vaya abajo */
+}
+
+.panel-izquierdo {
+  flex: 1;
+  min-width: 400px;
+}
+
+.panel-derecho {
+  flex: 2;
+  min-width: 400px;
+}
+
+/* ====== Paneles y contenido ====== */
+.panel {
+  background-color: white;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #00557a;
+}
+
+img#logo-preview {
+  display: block;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  max-width: 100%;
+}
+
+/* ====== Formularios y inputs ====== */
+input[type="file"],
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+/* ====== Scroll panel y frases ====== */
+.scroll-panel {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+  margin-bottom: 10px;
+}
+
+.frase-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-left: 3px solid #007aab;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.frase-card span {
+  flex: 1;
+  margin-right: 8px;
+  color: #333;
+}
+
+.frase-card:hover {
+  background-color: #f0f8ff;
+}
+
+/* ====== Botones ====== */
+
+button {
+  background-color: #007aab;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #005f87;
+}
+
+.frase-botones {
+  display: flex;
+  gap: 6px;
+}
+
+.frase-botones button:hover {
+  color: #007aab;
+}
+
+.frase-global {
+  border-left-color: #999; /* Si querés diferenciar frases globales */
+  opacity: 0.8;
+}
+
+.frases-lista {
+  padding: 15px;              /* espacio interno */
+  margin-top: 15px;           /* separación arriba */
+}
+
+.nueva-frase-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.nueva-frase-form input,
+.nueva-frase-form select {
+  flex: 1;
+}
+
+.btn-personalizar {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* ====== Plantillas y carrusel ====== */
+.plantilla-carousel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.plantilla-preview-multiple {
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plantilla-preview-unica {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: opacity 0.4s ease;
+  display: none;
+  opacity: 0;
+}
+
+
+.plantilla-preview-unica.visible {
+  display: block;
+  opacity: 1;
+}
+
+.plantilla-img-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+.plantilla-img {
+  width: 100%;
+  height: auto;
+  max-height: 80vh; /* limita verticalmente al 80% de la pantalla */
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.plantilla-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.85);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  z-index: 10;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+}
+
+.plantilla-nombre {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px;
+  background: #f4f4f4;
+  border-bottom: 1px solid #ccc;
+  color: #00557a;
+}
+
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  font-size: 32px;
+  padding: 10px 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.swal-frase-popup {
+  max-width: 500px !important;
+  width: 100% !important;
+}
+
+/* Controlar el input */
+.swal-frase-input {
+  width: 90% !important;
+  max-width: 90% !important;
+  box-sizing: border-box;
+  margin: auto;
+}
+
+.carousel-btn:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-btn.left {
+  left: 10px;
+}
+
+.carousel-btn.right {
+  right: 10px;
+}
+
+/* ====== Email y edición de contacto ====== */
+.email-card {
+  border-radius: 8px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.email-texto {
+  margin: 8px 0;
+  font-weight: bold;
+}
+
+.btn-editar-email {
+  padding: 5px 10px;
+  background-color: #007aab;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-editar-email:hover {
+  background-color: #003f5c;
+}
+
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+/* ====== Layout principal (container, paneles) ====== */
+.container {
+    flex-direction: column;
+  }
+
+  .panel-izquierdo,
+  .panel-derecho {
+    max-width: 100%;
+  }
+
+/* ====== Paneles y contenido ====== */
+.panel {
+    width: 100%;
+  }
+
+  .plantilla-preview {
+    width: 100%;
+    height: auto;
+  }
+}
+
+
+/*Frases*/
+
+.frase-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;  /* 👈 cambia center por flex-start, así los botones no se desalinean si el texto ocupa varias líneas */
+  gap: 10px;                /* espacio entre texto y botones */
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  margin-bottom: 10px;
+  max-width: 100%;          /* 👈 asegura que no se pase del contenedor */
+  box-sizing: border-box;
+}
+
+.frase-contenido {
+  display: flex;
+  flex-direction: column; /* 👈 texto arriba, cabecera abajo */
+}
+
+.frase-texto {
+  flex: 1;                      /* ocupa todo el ancho disponible */
+  word-break: break-word;       /* fuerza corte de palabras largas */
+  overflow-wrap: anywhere;      /* alternativa moderna */
+  white-space: normal;          /* permite múltiples líneas */
+}
+
+/* Inputs normales */
+.swal2-input {
+  text-align: left ;
+  width: 90% ;
+  max-width: 500px ;
+  margin: 6px auto ;
+}
+
+/* Selects */
+.swal2-select, select.swal2-input {
+  text-align: left ;
+  width: 90% ;
+  max-width: 500px ;
+  margin: 6px auto ;
+}
+
+/* Textarea fijo */
+.swal2-textarea {
+  text-align: left;
+  width: 90% ;
+  max-width: 500px ;
+  height: 100px ;   /* altura fija */
+  resize: none ;    /* sin redimensionar */
+  margin: 6px auto ;
+  font-size: 14px ;
+}
+
+/* Labels uniformes */
+.swal-label {
+  display: block;
+  text-align: left;
+  margin: 10px auto 4px auto;
+  width: 90%;
+  max-width: 500px;
+  color: #333;
+}

@@ -1,0 +1,19 @@
+
+[06/10/2025, 05:53 a. m.] (Deve) |Notice of readiness tendered by Mastera
+---
+[06/10/2025, 06:00 a. m.] (Deve) Vessel anchored at Recalada P/S. | Desde: 07:00 Hasta: 08:00
+---
+[06/10/2025, 06:03 a. m.] (tripi) Notice of readiness tendered by Master being vessel anchored at _____ P/S area awaiting authorization to proceed upriver. _____ terminal was free. Terminal signed application letter programming loading operations to commence as from ______ hrs It. Vessel anchored at ____ P/S
+---
+[06/10/2025, 06:14 a. m.] (Deve) Notice of readiness tendered by Master being vessel anchored at _____ P/S area awaiting authorization to proceed upriver. _____ terminal was free. Terminal signed application letter programming loading operations to commence as from ______ hrs It. Vessel anchored at ____ P/S
+---
+[06/10/2025, 06:17 a. m.] (Deve) Parcel X - XXXX MT - XXX - Bound for ____ / Commenced.
+---
+[06/10/2025, 06:17 a. m.] (Deve) Parcel X - XXXX MT - XXX - Bound for ____ / Interrupted.
+---
+[06/10/2025, 06:17 a. m.] (Deve) First line ashore at _____ terminal.
+---
+[06/10/2025, 06:28 a. m.] (Deve) Notice of readiness tendered by Master being vessel anchored at _____ P/S area awaiting authorization to proceed upriver. _____ terminal was free. Terminal signed application letter programming loading operations to commence as from ______ hrs It. Vessel anchored at ____ P/S | Desde: 06:28 Hasta: 07:28
+---
+[06/10/2025, 06:33 a. m.] (tripi) Notice of readiness tendered by Master.
+---

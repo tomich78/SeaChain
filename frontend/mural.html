@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title data-i18n="wall.title"></title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/mural.css" />
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/navbar.js" defer></script>
+  <script src="/js/utils/realtime.js"></script>
+  <script src="/js/utils/checkAuth.js"></script>
+  <script src="https://unpkg.com/i18next@latest/dist/umd/i18next.min.js"></script>
+  <script src="/js/i18n.js"></script>
+</head>
+
+<body class="protected">
+
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <div class="contenedor-mural">
+    <h2 data-i18n="wall.posts"></h2>
+
+    <!-- 🔵 Caja inicial para abrir el modal -->
+    <div class="card-crear-publicacion" id="abrir-modal-publicacion">
+      <img src="/img/avatar-default.png" class="avatar-mini" />
+      <input type="text" data-i18n-placeholder="wall.placeholder" disabled />
+    </div>
+
+    <!-- 🟢 Modal de creación -->
+    <div id="modal-publicacion" class="modal">
+      <div class="modal-contenido">
+        <span class="cerrar" id="cerrar-modal-publicacion">&times;</span>
+        <h3 data-i18n="wall.create_post"></h3>
+        <textarea id="contenido-modal" placeholder="Escribe algo..." rows="4"></textarea>
+        <input type="file" id="archivo-modal" />
+        <br>
+        <button id="btn-enviar-modal" data-i18n="wall.publish"></button>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- 📄 Publicaciones existentes -->
+    <div id="mural" class="mural-listado"></div>
+  </div>
+
+  <script src="/js/mural.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+/* ====== Índice de secciones ======
+1. Estilo global
+2. Títulos
+3. Contenedor principal
+4. Lista de empresas y miembros
+5. Ítem de miembro
+6. Animación al eliminar
+7. Nombre de miembro
+8. Select de rol
+9. Botón eliminar
+10. Responsividad
+================================= */
+h1, h2 {
+  text-align: center;
+  margin-top: 20px;
+  color: #004466;
+}
+
+.contenedor {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.lista-empresas {
+  margin-top: 20px;
+}
+
+#lista-miembros {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Cada miembro */
+.miembro-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eef2f5;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: background-color 0.2s ease, opacity 0.3s ease;
+  opacity: 1;
+}
+
+/* ✨ Animación al eliminar */
+.miembro-item.eliminando {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+}
+
+.miembro-nombre {
+  font-weight: 600;
+  font-size: 16px;
+  flex: 1;
+}
+
+/* Select moderno */
+.miembro-rol {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #fff;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border 0.2s ease;
+  margin-right: 10px; /* ⬅️ Mueve el select a la izquierda */
+}
+
+.miembro-rol:hover,
+.miembro-rol:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Triángulo del select */
+.miembro-rol {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%23666' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 30px;
+}
+
+/* Botón eliminar */
+.miembro-eliminar {
+  background-color: #af1f2d;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.miembro-eliminar:hover {
+  background-color: #c82333;
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .miembro-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .miembro-rol,
+  .miembro-eliminar {
+    width: 100%;
+  }
+}
+
